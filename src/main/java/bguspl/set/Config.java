@@ -11,7 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * This class holds all the game's configuration data
+ * This class holds all the game's configuration data.
  */
 public class Config {
 
