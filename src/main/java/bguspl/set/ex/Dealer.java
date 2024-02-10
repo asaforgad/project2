@@ -162,12 +162,19 @@ public class Dealer implements Runnable {
         int second = tokensList.get(1);
         int third = tokensList.get(2);
 
+        
+
+
 
 
 
         }
 
-        
+    public boolean comparColors(int first, int second, int third){
+
+        if(first.)
+
+    }  
 
     }
 }
