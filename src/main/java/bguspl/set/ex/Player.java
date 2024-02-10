@@ -91,9 +91,11 @@ public class Player implements Runnable {
             while (!queue.isEmpty()){
                 int token =queue.remove(queue.size()-1);
                 table.placeToken(id, token); howManyTokens++;
-                if (howManyTokens==3)
-                    dealer.isSet(table.)
-                    
+                if (howManyTokens==3){
+                    if (dealer.isSet(table.getTokens().get(id)))
+                        point();
+                    else penalty();
+                }
             }
 
             // TODO implement main player loop
