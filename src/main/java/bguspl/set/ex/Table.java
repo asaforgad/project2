@@ -99,7 +99,6 @@ public class Table {
         slotToCard[slot] = card;
         env.ui.placeCard(card, slot);
 
-        // TODO implement
     }
 
     /**
@@ -113,7 +112,7 @@ public class Table {
 
         cardToSlot[slotToCard[slot]]= null;
         slotToCard[slot]=null;
-        // TODO implement
+        env.ui.removeCard(slot);
     }
 
     /**
@@ -126,6 +125,8 @@ public class Table {
             tokens.add(null);
         tokens.get(player).add(slot);
         env.ui.placeToken(player, slot);
+        
+        
     }
 
     /**
@@ -144,10 +145,6 @@ public class Table {
             return true;
         }
         return false;
-    }
-
-    public ArrayList<ArrayList <Integer>> getTokensArrayList(){
-        return tokens;
     }
 
 }
