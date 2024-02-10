@@ -92,6 +92,7 @@ public class Table {
         } catch (InterruptedException ignored) {}
         cardToSlot[card] = slot;
         slotToCard[slot] = card;
+        env.ui.placeCard(card, slot);
 
         // TODO implement
     }
@@ -107,7 +108,6 @@ public class Table {
 
         cardToSlot[slotToCard[slot]]= null;
         slotToCard[slot]=null;
-
         // TODO implement
     }
 

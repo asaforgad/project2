@@ -103,10 +103,13 @@ public class Dealer implements Runnable {
      * Check if any cards can be removed from the deck and placed on the table.
      */
     private void placeCardsOnTable() {
-        while(!deck.isEmpty()){
-
+        for(int i=0; i<table.slotToCard.length & !deck.isEmpty(); i++){
+            if(table.slotToCard[i] == null){
+                Integer card = deck.get(0);
+                deck.remove(0);
+                table.placeCard(card, i);       
+            }     
         }
-        // TODO implement
     }
 
     /**
@@ -131,14 +134,17 @@ public class Dealer implements Runnable {
             deck.add(table.slotToCard[i]);
             table.removeCard(i);
             }
-  
-        // TODO implement
     }
 
     /**
      * Check who is/are the winner/s and displays them.
      */
     private void announceWinners() {
+        int winner = 0;
+        for(int i=0; i<players.length; i++){
+            if(players[i].score() >=)
+
+        }
         // TODO implement
     }
 }

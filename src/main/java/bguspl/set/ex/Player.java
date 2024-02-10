@@ -155,4 +155,8 @@ public class Player implements Runnable {
     public ArrayList <Integer> getQueue(){
         return this.queue;
     }
+
+    public int getScore(){
+        return score;
+    }
 }
