@@ -2,6 +2,8 @@ package bguspl.set.ex;
 
 import bguspl.set.Env;
 
+import java.util.List;
+
 /**
  * This class manages the players' threads and data
  *
@@ -49,6 +51,8 @@ public class Player implements Runnable {
      * The current score of the player.
      */
     private int score;
+
+    private List <int> queue = new List<int>;
 
     /**
      * The class constructor.
