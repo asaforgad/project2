@@ -43,6 +43,8 @@ public class Player implements Runnable {
      */
     private final boolean human;
 
+    private final Dealer dealer;
+
     /**
      * True iff game should be terminated.
      */
@@ -54,6 +56,8 @@ public class Player implements Runnable {
     private int score;
 
     private ArrayList <Integer> queue;
+
+    private int howManyTokens; 
 
     /**
      * The class constructor.
@@ -69,7 +73,9 @@ public class Player implements Runnable {
         this.table = table;
         this.id = id;
         this.human = human;
+        this.dealer = dealer;
         this.queue = new ArrayList<Integer>(3);
+        howManyTokens=0;
     }
 
     /**
@@ -82,6 +88,14 @@ public class Player implements Runnable {
         if (!human) createArtificialIntelligence();
 
         while (!terminate) {
+            while (!queue.isEmpty()){
+                int token =queue.remove(queue.size()-1);
+                table.placeToken(id, token); howManyTokens++;
+                if (howManyTokens==3)
+                    dealer.isSet(table.)
+                    
+            }
+
             // TODO implement main player loop
         }
         if (!human) try { aiThread.join(); } catch (InterruptedException ignored) {}
@@ -134,7 +148,6 @@ public class Player implements Runnable {
      */
     public void point() {
         // TODO implement
-        score++;
         
         int ignored = table.countCards(); // this part is just for demonstration in the unit tests
         env.ui.setScore(id, ++score);
