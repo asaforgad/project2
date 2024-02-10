@@ -147,4 +147,8 @@ public class Table {
         return false;
     }
 
+    public ArrayList <ArrayList<Integer>> getTokens(){
+        return tokens;
+    }
+
 }
