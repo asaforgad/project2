@@ -158,8 +158,12 @@ public class Dealer implements Runnable {
     }
 
     private boolean isSet(ArrayList<Integer> tokensList){
-        for(int i=0; i<3; i++){
-            
+        int first = tokensList.get(0);
+        int second = tokensList.get(1);
+        int third = tokensList.get(2);
+
+
+
 
         }
 
