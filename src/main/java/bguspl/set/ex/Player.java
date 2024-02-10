@@ -2,7 +2,7 @@ package bguspl.set.ex;
 
 import bguspl.set.Env;
 
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  * This class manages the players' threads and data
@@ -52,10 +52,7 @@ public class Player implements Runnable {
      */
     private int score;
 
-<<<<<<< HEAD
-    private List <int> queue = new List<int>;
-=======
->>>>>>> 927dbb6a2dfcd213b67efb8f2f40d0e4b1b1ccaf
+    private ArrayList <Integer> queue;
 
     /**
      * The class constructor.
@@ -71,6 +68,7 @@ public class Player implements Runnable {
         this.table = table;
         this.id = id;
         this.human = human;
+        this.queue = new ArrayList<Integer>(3);
     }
 
     /**
@@ -121,6 +119,7 @@ public class Player implements Runnable {
      * @param slot - the slot corresponding to the key pressed.
      */
     public void keyPressed(int slot) {
+        queue.add(slot);
         // TODO implement
     }
 
@@ -132,7 +131,8 @@ public class Player implements Runnable {
      */
     public void point() {
         // TODO implement
-
+        score++;
+        
         int ignored = table.countCards(); // this part is just for demonstration in the unit tests
         env.ui.setScore(id, ++score);
     }
