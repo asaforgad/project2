@@ -43,6 +43,7 @@ public class Dealer implements Runnable {
         this.players = players;
         deck = IntStream.range(0, env.config.deckSize).boxed().collect(Collectors.toList());
     }
+    
 
     /**
      * The dealer thread starts here (main loop for the dealer thread).
@@ -92,6 +93,9 @@ public class Dealer implements Runnable {
      * Checks cards should be removed from the table and removes them.
      */
     private void removeCardsFromTable() {
+
+
+
         // TODO implement
     }
 
@@ -99,6 +103,9 @@ public class Dealer implements Runnable {
      * Check if any cards can be removed from the deck and placed on the table.
      */
     private void placeCardsOnTable() {
+        while(!deck.isEmpty()){
+
+        }
         // TODO implement
     }
 
@@ -120,6 +127,11 @@ public class Dealer implements Runnable {
      * Returns all the cards from the table to the deck.
      */
     private void removeAllCardsFromTable() {
+        for(int i = 0 ; i<table.cardToSlot.length; i++){
+            deck.add(table.slotToCard[i]);
+            table.removeCard(i);
+            }
+  
         // TODO implement
     }
 

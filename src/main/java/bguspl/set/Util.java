@@ -15,6 +15,7 @@ public interface Util {
      */
     int[] cardToFeatures(int card);
 
+
     /**
      * Converts an array of card ids to an array of features (see cardToFeatures method).
      *

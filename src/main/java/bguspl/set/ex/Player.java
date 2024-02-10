@@ -36,6 +36,7 @@ public class Player implements Runnable {
      * The thread of the AI (computer) player (an additional thread used to generate key presses).
      */
     private Thread aiThread;
+    
 
     /**
      * True iff the player is human (not a computer player).
@@ -112,6 +113,7 @@ public class Player implements Runnable {
     public void terminate() {
         // TODO implement
     }
+    
 
     /**
      * This method is called when a key is pressed.
@@ -122,6 +124,7 @@ public class Player implements Runnable {
         queue.add(slot);
         // TODO implement
     }
+
 
     /**
      * Award a point to a player and perform other related actions.
@@ -143,8 +146,13 @@ public class Player implements Runnable {
     public void penalty() {
         // TODO implement
     }
+    
 
     public int score() {
         return score;
+    }
+
+    public ArrayList <Integer> getQueue(){
+        return this.queue;
     }
 }
