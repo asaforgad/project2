@@ -157,9 +157,11 @@ public class Dealer implements Runnable {
         }
     }
 
-    private boolean isSet(ArrayList<Integer> getTokensArrayList){
-        ArrayList<ArrayList <Integer>> playersList = getTokensArrayList;
-        for(int i=0; i< pla)
+    private boolean isSet(ArrayList<Integer> tokensList){
+        for(int i=0; i<3; i++){
+            
+
+        }
 
         
 
