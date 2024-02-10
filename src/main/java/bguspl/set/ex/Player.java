@@ -52,7 +52,10 @@ public class Player implements Runnable {
      */
     private int score;
 
+<<<<<<< HEAD
     private List <int> queue = new List<int>;
+=======
+>>>>>>> 927dbb6a2dfcd213b67efb8f2f40d0e4b1b1ccaf
 
     /**
      * The class constructor.
