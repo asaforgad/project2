@@ -158,23 +158,35 @@ public class Dealer implements Runnable {
     }
 
     private boolean isSet(ArrayList<Integer> tokensList){
-        int first = tokensList.get(0);
-        int second = tokensList.get(1);
-        int third = tokensList.get(2);
-
-        
-
-
-
-
+        int[] first = extractFeatures(tokensList.get(0));
+        int second[] = extractFeatures(tokensList.get(1));
+        int third[] = extractFeatures(tokensList.get(2));
+        return isSet(first, second, third);
 
         }
 
-    public boolean comparColors(int first, int second, int third){
+    private static int[] extractFeatures(Integer card) {
+        int[] features = new int[4];
+        for (int i = 0; i < 4; i++) {
+            features[i] = (card / (int) Math.pow(3, i)) % 3;
+        }
+        return features;
+    }
 
-        if(first.)
+    public static boolean isSet(int[] card1, int[] card2, int[] card3) {
+        for (int i = 0; i < 4; i++) {
+            int feature1 = card1[i];
+            int feature2 = card2[i];
+            int feature3 = card3[i];
 
-    }  
+            // Check if values are either all the same or all different
+            if (!((feature1 == feature2 && feature2 == feature3) || (feature1 != feature2 && feature2 != feature3 && feature1 != feature3))) {
+                return false; // Not a set
+            }
+        }
+        return true; // Form a set
+    }
+ 
 
     }
-}
+
