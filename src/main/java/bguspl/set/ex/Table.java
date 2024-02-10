@@ -126,7 +126,6 @@ public class Table {
             tokens.add(null);
         tokens.get(player).add(slot);
         env.ui.placeToken(player, slot);
-        
     }
 
     /**
@@ -145,6 +144,10 @@ public class Table {
             return true;
         }
         return false;
+    }
+
+    public ArrayList<ArrayList <Integer>> getTokensArrayList(){
+        return tokens;
     }
 
 }

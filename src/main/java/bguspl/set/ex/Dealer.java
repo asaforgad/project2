@@ -2,6 +2,7 @@ package bguspl.set.ex;
 
 import bguspl.set.Env;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -93,6 +94,8 @@ public class Dealer implements Runnable {
      * Checks cards should be removed from the table and removes them.
      */
     private void removeCardsFromTable() {
+        //if a player gets a set
+
 
 
 
@@ -140,11 +143,25 @@ public class Dealer implements Runnable {
      * Check who is/are the winner/s and displays them.
      */
     private void announceWinners() {
-        int winner = 0;
+        ArrayList <Integer> winners = new ArrayList<>(players.length);
+        int maxScore = 0;
         for(int i=0; i<players.length; i++){
-            if(players[i].score() >=)
-
+            if(players[i].score() <= maxScore){
+                maxScore = players[i].getScore();
+                winners.add(players[i].id);
+            }
         }
-        // TODO implement
+        System.out.println("Winners are: ");
+        for(int i = 0; i < winners.size(); i++){
+            System.out.println(winners.get(i));
+        }
+    }
+
+    private boolean isSet(ArrayList<Integer> getTokensArrayList){
+        ArrayList<ArrayList <Integer>> playersList = getTokensArrayList;
+        for(int i=0; i< pla)
+
+        
+
     }
 }
