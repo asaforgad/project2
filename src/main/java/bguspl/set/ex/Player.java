@@ -50,6 +50,7 @@ public class Player implements Runnable {
      */
     private int score;
 
+
     /**
      * The class constructor.
      *

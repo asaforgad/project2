@@ -90,7 +90,6 @@ public class Table {
         try {
             Thread.sleep(env.config.tableDelayMillis);
         } catch (InterruptedException ignored) {}
-
         cardToSlot[card] = slot;
         slotToCard[slot] = card;
 
@@ -105,6 +104,9 @@ public class Table {
         try {
             Thread.sleep(env.config.tableDelayMillis);
         } catch (InterruptedException ignored) {}
+
+        cardToSlot[slotToCard[slot]]= null;
+        slotToCard[slot]=null;
 
         // TODO implement
     }
