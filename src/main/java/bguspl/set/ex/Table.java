@@ -6,6 +6,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
+import java.util.ArrayList;
+
 
 /**
  * This class contains the data that is visible to the player.
@@ -29,6 +31,8 @@ public class Table {
      */
     protected final Integer[] cardToSlot; // slot per card (if any)
 
+    protected ArrayList <ArrayList<Integer>> tokens;
+
     /**
      * Constructor for testing.
      *
@@ -41,6 +45,7 @@ public class Table {
         this.env = env;
         this.slotToCard = slotToCard;
         this.cardToSlot = cardToSlot;
+        this.tokens = new ArrayList<ArrayList <Integer>>();
     }
 
     /**
@@ -117,11 +122,10 @@ public class Table {
      * @param slot   - the slot on which to place the token.
      */
     public void placeToken(int player, int slot) {
-        
-        
-
-        
-        // TODO implement
+        while (tokens.size()<player)
+            tokens.add(null);
+        tokens.get(player).add(slot);
+        env.ui.placeToken(player, slot);
         
     }
 
@@ -132,7 +136,14 @@ public class Table {
      * @return       - true iff a token was successfully removed.
      */
     public boolean removeToken(int player, int slot) {
-        // TODO implement
+        if (player<=tokens.size()){
+            env.ui.removeToken(player, slot);
+            for(Integer i: tokens.get(player)){
+                if (i.equals(slot))
+                    tokens.get(player).remove(slot);
+            }
+            return true;
+        }
         return false;
     }
 
