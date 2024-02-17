@@ -89,7 +89,7 @@ public class Player implements Runnable {
 
         while (!terminate) {
             while (!queue.isEmpty()){
-                int tokenToSlot =queue.remove(queue.size()-1);
+                int tokenToSlot =queue.remove(0);
                 if(table.tokens.get(id).contains(tokenToSlot)){
                     table.removeToken(id,tokenToSlot); decreaseHowMany();
                 }
@@ -98,11 +98,12 @@ public class Player implements Runnable {
                 }
             }
             while (howManyTokens==3){
-                 if (dealer.isSet(table.getTokens().get(id)))
-                    point();
-                else penalty();
+                //wake the dealer
+
+            //      dealer.isSet(table.getTokens().get(id)))
+
             }
-        }
+        
 
         if (!human) try { aiThread.join(); } catch (InterruptedException ignored) {}
         env.logger.info("thread " + Thread.currentThread().getName() + " terminated.");
@@ -117,6 +118,12 @@ public class Player implements Runnable {
         aiThread = new Thread(() -> {
             env.logger.info("thread " + Thread.currentThread().getName() + " starting.");
             while (!terminate) {
+                //check range
+                int random = (int)(Math.random() * range) + min;
+
+
+
+                this.queue.add(random);
                 // TODO implement player key press simulator
                 try {
                     synchronized (this) { wait(); }
@@ -155,23 +162,36 @@ public class Player implements Runnable {
     public void point() {
         
         int ignored = table.countCards(); // this part is just for demonstration in the unit tests
-        while (!table.getTokens().get(id).isEmpty()){
-            int slotOfToken0 = table.getTokens().get(id).get(0);
-            int slotOfToken1 = table.getTokens().get(id).get(1);
-            int slotOfToken2 = table.getTokens().get(id).get(2);
-            table.removeToken(id, slotOfToken0);
-            table.removeToken(id, slotOfToken1);
-            table.removeToken(id, slotOfToken2);
-            decreaseHowMany();decreaseHowMany();decreaseHowMany();
-        }
+        
+            
         env.ui.setScore(id, ++score);
+        //add time freeze
     }
+    //     }
+    //     while (!table.getTokens().get(id).isEmpty()){
+    //         int slotOfToken0 = table.getTokens().get(id).get(0);
+    //         int slotOfToken1 = table.getTokens().get(id).get(1);
+    //         int slotOfToken2 = table.getTokens().get(id).get(2);
+    //         table.removeToken(id, slotOfToken0);
+    //         table.removeToken(id, slotOfToken1);
+    //         table.removeToken(id, slotOfToken2);
+    //         decreaseHowMany();decreaseHowMany();decreaseHowMany();
+    //     }
+    //     env.ui.setScore(id, ++score);
+    // }
 
     /**
      * Penalize a player and perform other related actions.
      */
     public void penalty() {
-        // TODO implement
+        int ignored = table.countCards(); // this part is just for demonstration in the unit tests
+        while(!this.queue.isEmpty()){
+            int slot = table.getTokens().get(id).get(0);
+            table.removeToken(id, slot);
+            decreaseHowMany();
+            this.queue.remove(slot);
+        }
+        //add time freeze
     }
     
 

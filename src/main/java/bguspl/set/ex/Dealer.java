@@ -3,6 +3,7 @@ package bguspl.set.ex;
 import bguspl.set.Env;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -33,6 +34,9 @@ public class Dealer implements Runnable {
      */
     private volatile boolean terminate;
 
+    int claimerId;
+    boolean setExists;
+
     /**
      * The time when the dealer needs to reshuffle the deck due to turn timeout.
      */
@@ -43,6 +47,8 @@ public class Dealer implements Runnable {
         this.table = table;
         this.players = players;
         deck = IntStream.range(0, env.config.deckSize).boxed().collect(Collectors.toList());
+        claimerId = -1;
+        setExists = false;
     }
     
 
@@ -78,7 +84,10 @@ public class Dealer implements Runnable {
      * Called when the game should be terminated.
      */
     public void terminate() {
-        // TODO implement
+        for (Player player : players){
+            player.terminate();
+        }
+        terminate = true;
     }
 
     /**
@@ -95,6 +104,23 @@ public class Dealer implements Runnable {
      */
     private void removeCardsFromTable() {
         //if a player gets a set
+        //check which player
+
+        for(Player player : players){
+            while(!player.queue.isEmpty()){
+                int slot = table.getTokens().get(id).get(0);
+                table.removeToken(id, slot);
+                decreaseHowMany();
+                this.queue.remove(slot);
+        }
+
+        }
+        if(setExists){
+
+
+            setExists = false;
+        }
+
 
 
 
@@ -134,6 +160,10 @@ public class Dealer implements Runnable {
      * Reset and/or update the countdown and the countdown display.
      */
     private void updateTimerDisplay(boolean reset) {
+        if(!reset){
+
+        }
+
         // TODO implement
     }
 
@@ -145,6 +175,7 @@ public class Dealer implements Runnable {
             deck.add(table.slotToCard[i]);
             table.removeCard(i);
             }
+            Collections.shuffle(deck);
     }
 
     /**
@@ -165,13 +196,25 @@ public class Dealer implements Runnable {
         }
     }
 
-    public boolean isSet(ArrayList<Integer> tokensList){
+    public boolean isSet(int claimerId, ArrayList<Integer> tokensList){
         int[] first = extractFeatures(tokensList.get(0));
         int second[] = extractFeatures(tokensList.get(1));
         int third[] = extractFeatures(tokensList.get(2));
-        return isSet(first, second, third);
-
+        Player claimer = null;
+        for(Player player : players){
+            if(claimerId == player.id){
+                claimer = player;
+            }
         }
+        boolean isSet = isSet(first, second, third);
+        if(isSet){
+            setExists = true;
+            claimer.point(); 
+        }
+        else
+            claimer.penalty();
+        return isSet;
+    }
 
     private static int[] extractFeatures(Integer card) {
         int[] features = new int[4];
