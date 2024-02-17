@@ -118,12 +118,6 @@ public class Player implements Runnable {
         aiThread = new Thread(() -> {
             env.logger.info("thread " + Thread.currentThread().getName() + " starting.");
             while (!terminate) {
-                //check range
-                int random = (int)(Math.random() * range) + min;
-
-
-
-                this.queue.add(random);
                 // TODO implement player key press simulator
                 try {
                     synchronized (this) { wait(); }
@@ -162,8 +156,10 @@ public class Player implements Runnable {
     public void point() {
         
         int ignored = table.countCards(); // this part is just for demonstration in the unit tests
-        
-            
+        while(!this.queue.isEmpty()){
+            this.queue.remove(0);
+            decreaseHowMany();      
+        }    
         env.ui.setScore(id, ++score);
         //add time freeze
     }
@@ -186,10 +182,8 @@ public class Player implements Runnable {
     public void penalty() {
         int ignored = table.countCards(); // this part is just for demonstration in the unit tests
         while(!this.queue.isEmpty()){
-            int slot = table.getTokens().get(id).get(0);
-            table.removeToken(id, slot);
-            decreaseHowMany();
-            this.queue.remove(slot);
+            this.queue.remove(0);
+            decreaseHowMany();      
         }
         //add time freeze
     }

@@ -33,8 +33,8 @@ public class Dealer implements Runnable {
      * True iff game should be terminated.
      */
     private volatile boolean terminate;
-
-    int claimerId;
+    private ArrayList <Integer> tokensToRemove;
+    Player claimer;
     boolean setExists;
 
     /**
@@ -47,7 +47,7 @@ public class Dealer implements Runnable {
         this.table = table;
         this.players = players;
         deck = IntStream.range(0, env.config.deckSize).boxed().collect(Collectors.toList());
-        claimerId = -1;
+        claimer = null;
         setExists = false;
     }
     
@@ -104,29 +104,15 @@ public class Dealer implements Runnable {
      */
     private void removeCardsFromTable() {
         //if a player gets a set
-        //check which player
-
-        for(Player player : players){
-            while(!player.queue.isEmpty()){
-                int slot = table.getTokens().get(id).get(0);
-                table.removeToken(id, slot);
-                decreaseHowMany();
-                this.queue.remove(slot);
-        }
-
-        }
         if(setExists){
-
-
-            setExists = false;
+            while(!tokensToRemove.isEmpty()){
+                int slot = tokensToRemove.remove(0);
+                table.removeCard(slot); 
+            }
         }
-
-
-
-
-
-        // TODO implement
     }
+
+
 
     /**
      * Check if any cards can be removed from the deck and placed on the table.
@@ -139,6 +125,7 @@ public class Dealer implements Runnable {
                 table.placeCard(card, i);       
             }     
         }
+        setExists = false;
     }
 
     /**
@@ -175,7 +162,8 @@ public class Dealer implements Runnable {
             deck.add(table.slotToCard[i]);
             table.removeCard(i);
             }
-            Collections.shuffle(deck);
+        Collections.shuffle(deck);
+        setExists = false;
     }
 
     /**
@@ -200,7 +188,6 @@ public class Dealer implements Runnable {
         int[] first = extractFeatures(tokensList.get(0));
         int second[] = extractFeatures(tokensList.get(1));
         int third[] = extractFeatures(tokensList.get(2));
-        Player claimer = null;
         for(Player player : players){
             if(claimerId == player.id){
                 claimer = player;
@@ -209,7 +196,9 @@ public class Dealer implements Runnable {
         boolean isSet = isSet(first, second, third);
         if(isSet){
             setExists = true;
-            claimer.point(); 
+            for(int slot: claimer.getQueue()){
+                tokensToRemove.add(slot); 
+                claimer.point(); 
         }
         else
             claimer.penalty();
