@@ -89,22 +89,17 @@ public class Player implements Runnable {
 
         while (!terminate) {
             while (!queue.isEmpty()){
-                int tokenToslot =queue.remove(queue.size()-1);
-                if(table.tokens.get(id).contains(tokenToslot)){
-                    table.removeToken(id,tokenToslot);  
-                    howManyTokens--;  
-                }
-                    table.placeToken(id, tokenToslot); 
-                    howManyTokens++;
-                if (howManyTokens==3){
-                    if (dealer.isSet(table.getTokens().get(id)))
-                        point();
-                    else penalty();
-                }
+                int token =queue.remove(queue.size()-1);
+                table.placeToken(id, token); howManyTokens++;
+            }
+            while (howManyTokens==3){
+                 if (dealer.isSet(table.getTokens().get(id)))
+                    point();
+                else penalty();
+            }
             }
 
-            // TODO implement main player loop
-        }
+        
         if (!human) try { aiThread.join(); } catch (InterruptedException ignored) {}
         env.logger.info("thread " + Thread.currentThread().getName() + " terminated.");
     }
@@ -132,7 +127,7 @@ public class Player implements Runnable {
      * Called when the game should be terminated.
      */
     public void terminate() {
-        // TODO implement
+        terminate = true;
     }
     
 
@@ -143,7 +138,6 @@ public class Player implements Runnable {
      */
     public void keyPressed(int slot) {
         queue.add(slot);
-        // TODO implement
     }
 
 
@@ -152,11 +146,19 @@ public class Player implements Runnable {
      *
      * @post - the player's score is increased by 1.
      * @post - the player's score is updated in the ui.
+     * remember to sleep the thread
      */
     public void point() {
-        // TODO implement
         
         int ignored = table.countCards(); // this part is just for demonstration in the unit tests
+        while (!table.getTokens().get(id).isEmpty()){
+            int slotOfToken0 = table.getTokens().get(id).get(0);
+            int slotOfToken1 = table.getTokens().get(id).get(1);
+            int slotOfToken2 = table.getTokens().get(id).get(2);
+            table.removeToken(id, slotOfToken0);
+            table.removeToken(id, slotOfToken1);
+            table.removeToken(id, slotOfToken2);
+        }
         env.ui.setScore(id, ++score);
     }
 
