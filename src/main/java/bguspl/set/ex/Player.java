@@ -91,11 +91,10 @@ public class Player implements Runnable {
             while (!queue.isEmpty()){
                 int tokenToSlot =queue.remove(queue.size()-1);
                 if(table.tokens.get(id).contains(tokenToSlot)){
-                    table.removeToken(id,tokenToSlot);
-                    howManyTokens--;
+                    table.removeToken(id,tokenToSlot); decreaseHowMany();
                 }
                 else{
-                    table.placeToken(id, tokenToSlot); howManyTokens++;
+                    table.placeToken(id, tokenToSlot); increaseHowMany();
                 }
             }
             while (howManyTokens==3){
@@ -163,6 +162,7 @@ public class Player implements Runnable {
             table.removeToken(id, slotOfToken0);
             table.removeToken(id, slotOfToken1);
             table.removeToken(id, slotOfToken2);
+            decreaseHowMany();decreaseHowMany();decreaseHowMany();
         }
         env.ui.setScore(id, ++score);
     }
@@ -186,4 +186,11 @@ public class Player implements Runnable {
     public int getScore(){
         return score;
     }
+    public void decreaseHowMany(){
+        howManyTokens--;
+    }
+    public void increaseHowMany(){
+        howManyTokens++;
+    }
+    
 }
