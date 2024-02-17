@@ -89,11 +89,12 @@ public class Player implements Runnable {
 
         while (!terminate) {
             while (!queue.isEmpty()){
-                int token =queue.remove(queue.size()-1);
-                if(table.tokens.get(id).contains(token)){
-                    table.removeToken(id,token);    
+                int tokenToslot =queue.remove(queue.size()-1);
+                if(table.tokens.get(id).contains(tokenToslot)){
+                    table.removeToken(id,tokenToslot);  
+                    howManyTokens--;  
                 }
-                    table.placeToken(id, token); 
+                    table.placeToken(id, tokenToslot); 
                     howManyTokens++;
                 if (howManyTokens==3){
                     if (dealer.isSet(table.getTokens().get(id)))
