@@ -114,6 +114,12 @@ public class Table {
         cardToSlot[slotToCard[slot]]= null;
         slotToCard[slot]=null;
         env.ui.removeCard(slot);
+
+        for (int i =0 ; i<tokens.size() ; i++){
+            if(tokens.get(i).contains(slot))
+                removeToken(i, slot);
+        }
+
     }
 
     /**
@@ -140,9 +146,11 @@ public class Table {
         if (player<=tokens.size()){
             env.ui.removeToken(player, slot);
             for(Integer i: tokens.get(player)){
-                if (i.equals(slot))
+                if (i.equals(slot)){
                     tokens.get(player).remove(slot);
+                }
             }
+
             return true;
         }
         return false;
