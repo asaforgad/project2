@@ -89,17 +89,22 @@ public class Player implements Runnable {
 
         while (!terminate) {
             while (!queue.isEmpty()){
-                int token =queue.remove(queue.size()-1);
-                table.placeToken(id, token); howManyTokens++;
+                int tokenToSlot =queue.remove(queue.size()-1);
+                if(table.tokens.get(id).contains(tokenToSlot)){
+                    table.removeToken(id,tokenToSlot);
+                    howManyTokens--;
+                }
+                else{
+                    table.placeToken(id, tokenToSlot); howManyTokens++;
+                }
             }
             while (howManyTokens==3){
                  if (dealer.isSet(table.getTokens().get(id)))
                     point();
                 else penalty();
             }
-            }
+        }
 
-        
         if (!human) try { aiThread.join(); } catch (InterruptedException ignored) {}
         env.logger.info("thread " + Thread.currentThread().getName() + " terminated.");
     }
