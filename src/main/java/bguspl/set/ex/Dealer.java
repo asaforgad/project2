@@ -157,7 +157,7 @@ public class Dealer implements Runnable {
         }
     }
 
-    private boolean isSet(ArrayList<Integer> tokensList){
+    public boolean isSet(ArrayList<Integer> tokensList){
         int[] first = extractFeatures(tokensList.get(0));
         int second[] = extractFeatures(tokensList.get(1));
         int third[] = extractFeatures(tokensList.get(2));

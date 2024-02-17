@@ -58,6 +58,7 @@ public class Table {
         this(env, new Integer[env.config.tableSize], new Integer[env.config.deckSize]);
     }
 
+
     /**
      * This method prints all possible legal sets of cards that are currently on the table.
      */
