@@ -132,15 +132,15 @@ public class Dealer implements Runnable {
      * Sleep for a fixed amount of time or until the thread is awakened for some purpose.
      */
     private void sleepUntilWokenOrTimeout() {
-        long sleepDurationMillis = 60000; // 60 seconds
+        // long sleepDurationMillis = 60000; // 60 seconds
 
-        try {
-            // Sleep for the fixed amount of time
-            Thread.sleep(sleepDurationMillis);
-        } catch (InterruptedException e) {
-            // Thread was interrupted, handle interruption if needed
-            System.out.println("Thread was interrupted.");
-        }
+        // try {
+        //     // Sleep for the fixed amount of time
+        //     Thread.sleep(sleepDurationMillis);
+        // } catch (InterruptedException e) {
+        //     // Thread was interrupted, handle interruption if needed
+        //     System.out.println("Thread was interrupted.");
+        // }
     }
 
     /**
