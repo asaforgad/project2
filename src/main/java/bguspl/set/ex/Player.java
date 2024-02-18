@@ -97,16 +97,16 @@ public class Player implements Runnable {
                     table.placeToken(id, tokenToSlot); increaseHowMany();
                 }
             }
-            while (howManyTokens==3){
-                //wake the dealer
+            // while (howManyTokens==3){
+            //     //wake the dealer
 
-            //      dealer.isSet(table.getTokens().get(id)))
+            //      dealer.isSet(id, table.getTokens().get(id));
 
-            }
+            // }
         
 
         if (!human) try { aiThread.join(); } catch (InterruptedException ignored) {}
-        env.logger.info("thread " + Thread.currentThread().getName() + " terminated.");
+        env.logger.info("thread " + Thread.currentThread().getName() + " terminated.");}
     }
 
     /**
