@@ -199,6 +199,7 @@ public class Dealer implements Runnable {
             for(int slot: claimer.getQueue()){
                 tokensToRemove.add(slot); 
                 claimer.point(); 
+            }
         }
         else
             claimer.penalty();

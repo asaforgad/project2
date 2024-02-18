@@ -118,6 +118,8 @@ public class Player implements Runnable {
         aiThread = new Thread(() -> {
             env.logger.info("thread " + Thread.currentThread().getName() + " starting.");
             while (!terminate) {
+                int random = (int) ((Math.random() * (12 - 1)) + 1);
+                keyPressed(random);
                 // TODO implement player key press simulator
                 try {
                     synchronized (this) { wait(); }
