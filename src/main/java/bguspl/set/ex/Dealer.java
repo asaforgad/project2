@@ -50,6 +50,7 @@ public class Dealer implements Runnable {
         deck = IntStream.range(0, env.config.deckSize).boxed().collect(Collectors.toList());
         claimer = null;
         setExists = false;
+        reshuffleTime= System.currentTimeMillis()+env.config.turnTimeoutMillis;
     }
     
 
@@ -142,6 +143,7 @@ public class Dealer implements Runnable {
             // Thread was interrupted, handle interruption if needed
             System.out.println("Thread was interrupted.");
         }
+        env.ui.setElapsed(sleepDurationMillis);
     }
 
     /**
@@ -149,10 +151,14 @@ public class Dealer implements Runnable {
      */
     private void updateTimerDisplay(boolean reset) {
         if(!reset){
-            
+            env.ui.setCountdown(reshuffleTime-System.currentTimeMillis(), reset);
+        }else{
+
+        reshuffleTime = System.currentTimeMillis() + env.config.turnTimeoutMillis;
         }
 
-        // TODO implement
+
+        
     }
 
     /**

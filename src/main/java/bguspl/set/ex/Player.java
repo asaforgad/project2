@@ -166,25 +166,14 @@ public class Player implements Runnable {
 
         try {
             // Sleep for the fixed amount of time
-            Thread.sleep(60000);
+            Thread.sleep(env.config.pointFreezeMillis);
         } catch (InterruptedException e) {
             // Thread was interrupted, handle interruption if needed
             System.out.println("Thread was interrupted.");
         }
         //add time freeze
     }
-    //     }
-    //     while (!table.getTokens().get(id).isEmpty()){
-    //         int slotOfToken0 = table.getTokens().get(id).get(0);
-    //         int slotOfToken1 = table.getTokens().get(id).get(1);
-    //         int slotOfToken2 = table.getTokens().get(id).get(2);
-    //         table.removeToken(id, slotOfToken0);
-    //         table.removeToken(id, slotOfToken1);
-    //         table.removeToken(id, slotOfToken2);
-    //         decreaseHowMany();decreaseHowMany();decreaseHowMany();
-    //     }
-    //     env.ui.setScore(id, ++score);
-    // }
+
 
     /**
      * Penalize a player and perform other related actions.
