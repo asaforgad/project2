@@ -115,7 +115,6 @@ public class Dealer implements Runnable {
     }
 
 
-
     /**
      * Check if any cards can be removed from the deck and placed on the table.
      */
@@ -235,3 +234,4 @@ public class Dealer implements Runnable {
  
 
     }
+
