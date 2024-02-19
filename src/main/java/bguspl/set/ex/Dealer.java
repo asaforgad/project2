@@ -127,6 +127,7 @@ public class Dealer implements Runnable {
                 table.placeCard(card, i);       
             }     
         }
+        updateTimerDisplay(true);
         setExists = false;
     }
 
@@ -156,9 +157,6 @@ public class Dealer implements Runnable {
 
         reshuffleTime = System.currentTimeMillis() + env.config.turnTimeoutMillis;
         }
-
-
-        
     }
 
     /**
