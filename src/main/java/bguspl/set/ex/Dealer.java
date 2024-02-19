@@ -152,16 +152,10 @@ public class Dealer implements Runnable {
      */
     private void updateTimerDisplay(boolean reset) {
         if(!reset){
-<<<<<<< HEAD
-            
-            
-        }
-=======
-            env.ui.setCountdown(reshuffleTime-System.currentTimeMillis(), reset);
+            env.ui.setCountdown(reshuffleTime-System.currentTimeMillis(), false);
         }else{
->>>>>>> a6ca09800c3a98ac7b95681288ff72eb5bb22d1b
-
         reshuffleTime = System.currentTimeMillis() + env.config.turnTimeoutMillis;
+        env.ui.setCountdown(reshuffleTime-System.currentTimeMillis(), false);
         }
     }
 
