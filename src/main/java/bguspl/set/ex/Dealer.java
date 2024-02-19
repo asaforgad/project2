@@ -199,12 +199,12 @@ public class Dealer implements Runnable {
             }
         }
         boolean isSet = isSet(first, second, third);
-        if(isSet){
+        if(isSet(first, second, third)){
             setExists = true;
             for(int slot: claimer.getQueue()){
                 tokensToRemove.add(slot); 
-                claimer.point(); 
             }
+            claimer.point(); 
         }
         else
             claimer.penalty();
