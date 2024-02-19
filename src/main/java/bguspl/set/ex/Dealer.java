@@ -60,6 +60,10 @@ public class Dealer implements Runnable {
     @Override
     public void run() {
         env.logger.info("thread " + Thread.currentThread().getName() + " starting.");
+        // for(int i =0; i< players.length; i++){c
+        //     Thread player = new Thread(players[i], "player" +i);
+        //     player.start();
+        // }
         while (!shouldFinish()) {
             placeCardsOnTable();
             timerLoop();
