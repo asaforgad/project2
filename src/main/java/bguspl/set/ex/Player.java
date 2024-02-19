@@ -99,9 +99,9 @@ public class Player implements Runnable {
             }
             while (howManyTokens==3){
                 //wake the dealer
-                notify();
+                // notify();
 
-                //  dealer.isSet(id, table.getTokens().get(id));
+                 dealer.isSet(id, table.getTokens().get(id));
 
             }
         
@@ -121,7 +121,6 @@ public class Player implements Runnable {
             while (!terminate) {
                 int random = (int) (Math.random() * 12 );
                 keyPressed(random);
-                // TODO implement player key press simulator
                 try {
                     synchronized (this) { wait(); }
                 } catch (InterruptedException ignored) {}
@@ -183,10 +182,6 @@ public class Player implements Runnable {
      */
     public void penalty() {
         int ignored = table.countCards(); // this part is just for demonstration in the unit tests
-        while(!this.queue.isEmpty()){
-            this.queue.remove(0);
-            decreaseHowMany();      
-        }
         try {
             // Sleep for the fixed amount of time
             Thread.sleep(env.config.pointFreezeMillis);

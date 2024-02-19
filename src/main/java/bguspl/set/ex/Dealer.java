@@ -126,24 +126,24 @@ public class Dealer implements Runnable {
                 table.placeCard(card, i);       
             }     
         }
-        updateTimerDisplay(true);
+        
         setExists = false;
+        updateTimerDisplay(true);
     }
 
     /**
      * Sleep for a fixed amount of time or until the thread is awakened for some purpose.
      */
     private void sleepUntilWokenOrTimeout() {
-        long sleepDurationMillis = 50; // 0.5 seconds
 
         try {
             // Sleep for the fixed amount of time
-            Thread.sleep(sleepDurationMillis);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             // Thread was interrupted, handle interruption if needed
             System.out.println("Thread was interrupted.");
         }
-        env.ui.setElapsed(sleepDurationMillis);
+        // env.ui.setElapsed(sleepDurationMillis);
     }
 
     /**
@@ -152,9 +152,10 @@ public class Dealer implements Runnable {
     private void updateTimerDisplay(boolean reset) {
         if(!reset){
             env.ui.setCountdown(reshuffleTime-System.currentTimeMillis(), false);
-        }else{
-        reshuffleTime = System.currentTimeMillis() + env.config.turnTimeoutMillis;
-        env.ui.setCountdown(reshuffleTime-System.currentTimeMillis(), false);
+        }
+        else{
+            reshuffleTime = System.currentTimeMillis() + env.config.turnTimeoutMillis;
+            env.ui.setCountdown(reshuffleTime-System.currentTimeMillis(), false);
         }
     }
 
@@ -168,6 +169,7 @@ public class Dealer implements Runnable {
             }
         Collections.shuffle(deck);
         setExists = false;
+        
     }
 
     /**
@@ -204,6 +206,7 @@ public class Dealer implements Runnable {
                 tokensToRemove.add(slot); 
             }
             claimer.point(); 
+            
         }
         else
             claimer.penalty();
