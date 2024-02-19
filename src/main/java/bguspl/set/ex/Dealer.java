@@ -50,6 +50,7 @@ public class Dealer implements Runnable {
         deck = IntStream.range(0, env.config.deckSize).boxed().collect(Collectors.toList());
         claimer = null;
         setExists = false;
+        reshuffleTime= System.currentTimeMillis()+env.config.turnTimeoutMillis;
     }
     
 
@@ -126,6 +127,7 @@ public class Dealer implements Runnable {
                 table.placeCard(card, i);       
             }     
         }
+        updateTimerDisplay(true);
         setExists = false;
     }
 
@@ -142,6 +144,7 @@ public class Dealer implements Runnable {
             // Thread was interrupted, handle interruption if needed
             System.out.println("Thread was interrupted.");
         }
+        env.ui.setElapsed(sleepDurationMillis);
     }
 
     /**
@@ -149,11 +152,17 @@ public class Dealer implements Runnable {
      */
     private void updateTimerDisplay(boolean reset) {
         if(!reset){
+<<<<<<< HEAD
             
             
         }
+=======
+            env.ui.setCountdown(reshuffleTime-System.currentTimeMillis(), reset);
+        }else{
+>>>>>>> a6ca09800c3a98ac7b95681288ff72eb5bb22d1b
 
-        // TODO implement
+        reshuffleTime = System.currentTimeMillis() + env.config.turnTimeoutMillis;
+        }
     }
 
     /**
@@ -196,12 +205,12 @@ public class Dealer implements Runnable {
             }
         }
         boolean isSet = isSet(first, second, third);
-        if(isSet){
+        if(isSet(first, second, third)){
             setExists = true;
             for(int slot: claimer.getQueue()){
                 tokensToRemove.add(slot); 
-                claimer.point(); 
             }
+            claimer.point(); 
         }
         else
             claimer.penalty();
