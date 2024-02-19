@@ -97,12 +97,10 @@ public class Player implements Runnable {
                     table.placeToken(id, tokenToSlot); increaseHowMany();
                 }
             }
-            // while (howManyTokens==3){
-            //     //wake the dealer
-
-            //      dealer.isSet(id, table.getTokens().get(id));
-
-            // }
+             while (howManyTokens==3){
+                 dealer.notify();
+                  dealer.isSet(id, table.getTokens().get(id));
+             }
         
 
         if (!human) try { aiThread.join(); } catch (InterruptedException ignored) {}
@@ -118,9 +116,9 @@ public class Player implements Runnable {
         aiThread = new Thread(() -> {
             env.logger.info("thread " + Thread.currentThread().getName() + " starting.");
             while (!terminate) {
-                int random = (int) ((Math.random() * (12 - 0)) + 0);
+                int random = (int) (Math.random() * 12 );
                 keyPressed(random);
-                // TODO implement player key press simulator
+
                 try {
                     synchronized (this) { wait(); }
                 } catch (InterruptedException ignored) {}
