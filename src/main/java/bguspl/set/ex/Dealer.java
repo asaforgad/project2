@@ -133,7 +133,7 @@ public class Dealer implements Runnable {
      * Sleep for a fixed amount of time or until the thread is awakened for some purpose.
      */
     private void sleepUntilWokenOrTimeout() {
-        long sleepDurationMillis = 300; // 3 seconds
+        long sleepDurationMillis = 50; // 0.5 seconds
 
         try {
             // Sleep for the fixed amount of time
