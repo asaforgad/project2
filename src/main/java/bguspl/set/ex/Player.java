@@ -97,12 +97,13 @@ public class Player implements Runnable {
                     table.placeToken(id, tokenToSlot); increaseHowMany();
                 }
             }
-            // while (howManyTokens==3){
-            //     //wake the dealer
+            while (howManyTokens==3){
+                //wake the dealer
+                notify();
 
-            //      dealer.isSet(id, table.getTokens().get(id));
+                //  dealer.isSet(id, table.getTokens().get(id));
 
-            // }
+            }
         
 
         if (!human) try { aiThread.join(); } catch (InterruptedException ignored) {}
@@ -120,7 +121,6 @@ public class Player implements Runnable {
             while (!terminate) {
                 int random = (int) ((Math.random() * (12 - 0)) + 0);
                 keyPressed(random);
-                // TODO implement player key press simulator
                 try {
                     synchronized (this) { wait(); }
                 } catch (InterruptedException ignored) {}
@@ -185,6 +185,13 @@ public class Player implements Runnable {
         while(!this.queue.isEmpty()){
             this.queue.remove(0);
             decreaseHowMany();      
+        }
+        try {
+            // Sleep for the fixed amount of time
+            Thread.sleep(env.config.pointFreezeMillis);
+        } catch (InterruptedException e) {
+            // Thread was interrupted, handle interruption if needed
+            System.out.println("Thread was interrupted.");
         }
         env.ui.setFreeze(id, env.config.penaltyFreezeMillis);
     }
