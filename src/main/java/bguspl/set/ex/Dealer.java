@@ -1,18 +1,16 @@
 package bguspl.set.ex;
 
 import bguspl.set.Env;
-import bguspl.set.UserInterface;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 /**
- * This class manages the dealer's threads and data
+ * This class manages the players' threads and data
+ *
+ * @inv id >= 0
+ * @inv score >= 0
  */
-public class Dealer implements Runnable {
+public class Player implements Runnable {
 
     /**
      * The game environment object.
@@ -23,215 +21,189 @@ public class Dealer implements Runnable {
      * Game entities.
      */
     private final Table table;
-    private final Player[] players;
 
     /**
-     * The list of card ids that are left in the dealer's deck.
+     * The id of the player (starting from 0).
      */
-    private final List<Integer> deck;
+    public final int id;
+
+    /**
+     * The thread representing the current player.
+     */
+    private Thread playerThread;
+
+    /**
+     * The thread of the AI (computer) player (an additional thread used to generate key presses).
+     */
+    private Thread aiThread;
+    
+
+    /**
+     * True iff the player is human (not a computer player).
+     */
+    private final boolean human;
+
+    private final Dealer dealer;
 
     /**
      * True iff game should be terminated.
      */
     private volatile boolean terminate;
-    private ArrayList <Integer> tokensToRemove;
-    Player claimer;
-    boolean setExists;
 
     /**
-     * The time when the dealer needs to reshuffle the deck due to turn timeout.
+     * The current score of the player.
      */
-    private long reshuffleTime = Long.MAX_VALUE;
+    private int score;
 
-    public Dealer(Env env, Table table, Player[] players) {
+    private ArrayList <Integer> queue;
+
+    private int howManyTokens; 
+
+    /**
+     * The class constructor.
+     *
+     * @param env    - the environment object.
+     * @param dealer - the dealer object.
+     * @param table  - the table object.
+     * @param id     - the id of the player.
+     * @param human  - true iff the player is a human player (i.e. input is provided manually, via the keyboard).
+     */
+    public Player(Env env, Dealer dealer, Table table, int id, boolean human) {
         this.env = env;
         this.table = table;
-        this.players = players;
-        deck = IntStream.range(0, env.config.deckSize).boxed().collect(Collectors.toList());
-        claimer = null;
-        setExists = false;
-        reshuffleTime= System.currentTimeMillis()+env.config.turnTimeoutMillis;
+        this.id = id;
+        this.human = human;
+        this.dealer = dealer;
+        this.queue = new ArrayList<Integer>(3);
+        howManyTokens=0;
     }
-    
 
     /**
-     * The dealer thread starts here (main loop for the dealer thread).
+     * The main player thread of each player starts here (main loop for the player thread).
      */
     @Override
     public void run() {
+        playerThread = Thread.currentThread();
         env.logger.info("thread " + Thread.currentThread().getName() + " starting.");
-        while (!shouldFinish()) {
-            placeCardsOnTable();
-            timerLoop();
-            updateTimerDisplay(false);
-            removeAllCardsFromTable();
-        }
-        announceWinners();
-        env.logger.info("thread " + Thread.currentThread().getName() + " terminated.");
+        if (!human) createArtificialIntelligence();
+
+        while (!terminate) {
+            while (!queue.isEmpty()){
+                int tokenToSlot =queue.remove(0);
+                if(table.tokens.get(id).contains(tokenToSlot)){
+                    table.removeToken(id,tokenToSlot); decreaseHowMany();
+                }
+                else{
+                    table.placeToken(id, tokenToSlot); increaseHowMany();
+                }
+            }
+             while (howManyTokens==3){
+                 dealer.notify();
+                  dealer.isSet(id, table.getTokens().get(id));
+             }
+        
+
+        if (!human) try { aiThread.join(); } catch (InterruptedException ignored) {}
+        env.logger.info("thread " + Thread.currentThread().getName() + " terminated.");}
     }
 
     /**
-     * The inner loop of the dealer thread that runs as long as the countdown did not time out.
+     * Creates an additional thread for an AI (computer) player. The main loop of this thread repeatedly generates
+     * key presses. If the queue of key presses is full, the thread waits until it is not full.
      */
-    private void timerLoop() {
-        while (!terminate && System.currentTimeMillis() < reshuffleTime) {
-            sleepUntilWokenOrTimeout();
-            updateTimerDisplay(false);
-            removeCardsFromTable();
-            placeCardsOnTable();
-        }
+    private void createArtificialIntelligence() {
+        // note: this is a very, very smart AI (!)
+        aiThread = new Thread(() -> {
+            env.logger.info("thread " + Thread.currentThread().getName() + " starting.");
+            while (!terminate) {
+                int random = (int) (Math.random() * 12 );
+                keyPressed(random);
+
+                try {
+                    synchronized (this) { wait(); }
+                } catch (InterruptedException ignored) {}
+            }
+            env.logger.info("thread " + Thread.currentThread().getName() + " terminated.");
+        }, "computer-" + id);
+        aiThread.start();
     }
 
     /**
      * Called when the game should be terminated.
      */
     public void terminate() {
-        for (Player player : players){
-            player.terminate();
-        }
         terminate = true;
     }
+    
 
     /**
-     * Check if the game should be terminated or the game end conditions are met.
+     * This method is called when a key is pressed.
      *
-     * @return true iff the game should be finished.
+     * @param slot - the slot corresponding to the key pressed.
      */
-    private boolean shouldFinish() {
-        return terminate || env.util.findSets(deck, 1).size() == 0;
-    }
-
-    /**
-     * Checks cards should be removed from the table and removes them.
-     */
-    private void removeCardsFromTable() {
-        //if a player gets a set
-        if(setExists){
-            while(!tokensToRemove.isEmpty()){
-                int slot = tokensToRemove.remove(0);
-                table.removeCard(slot); 
-            }
-        }
+    public void keyPressed(int slot) {
+        queue.add(slot);
     }
 
 
-
     /**
-     * Check if any cards can be removed from the deck and placed on the table.
+     * Award a point to a player and perform other related actions.
+     *
+     * @post - the player's score is increased by 1.
+     * @post - the player's score is updated in the ui.
+     * remember to sleep the thread
      */
-    private void placeCardsOnTable() {
-        for(int i=0; i<table.slotToCard.length & !deck.isEmpty(); i++){
-            if(table.slotToCard[i] == null){
-                Integer card = deck.get(0);
-                deck.remove(0);
-                table.placeCard(card, i);       
-            }     
-        }
-        updateTimerDisplay(true);
-        setExists = false;
-    }
-
-    /**
-     * Sleep for a fixed amount of time or until the thread is awakened for some purpose.
-     */
-    private void sleepUntilWokenOrTimeout() {
-        long sleepDurationMillis = 50; // 0.5 seconds
+    public void point() {
+        
+        int ignored = table.countCards(); // this part is just for demonstration in the unit tests
+        while(!this.queue.isEmpty()){
+            this.queue.remove(0);
+            decreaseHowMany();      
+        }    
+        env.ui.setScore(id, ++score);
 
         try {
             // Sleep for the fixed amount of time
-            Thread.sleep(sleepDurationMillis);
+            Thread.sleep(env.config.pointFreezeMillis);
         } catch (InterruptedException e) {
             // Thread was interrupted, handle interruption if needed
             System.out.println("Thread was interrupted.");
         }
-        env.ui.setElapsed(sleepDurationMillis);
+   
+        env.ui.setFreeze(id,env.config.pointFreezeMillis);
+        
     }
+
 
     /**
-     * Reset and/or update the countdown and the countdown display.
+     * Penalize a player and perform other related actions.
      */
-    private void updateTimerDisplay(boolean reset) {
-        if(!reset){
-            env.ui.setCountdown(reshuffleTime-System.currentTimeMillis(), false);
-        }else{
-        reshuffleTime = System.currentTimeMillis() + env.config.turnTimeoutMillis;
-        env.ui.setCountdown(reshuffleTime-System.currentTimeMillis(), false);
+    public void penalty() {
+        int ignored = table.countCards(); // this part is just for demonstration in the unit tests
+        while(!this.queue.isEmpty()){
+            this.queue.remove(0);
+            decreaseHowMany();      
         }
+        env.ui.setFreeze(id, env.config.penaltyFreezeMillis);
+    }
+    
+
+    public int score() {
+        return score;
     }
 
-    /**
-     * Returns all the cards from the table to the deck.
-     */
-    private void removeAllCardsFromTable() {
-        for(int i = 0 ; i<table.cardToSlot.length; i++){
-            deck.add(table.slotToCard[i]);
-            table.removeCard(i);
-            }
-        Collections.shuffle(deck);
-        setExists = false;
+    public ArrayList <Integer> getQueue(){
+        return this.queue;
     }
 
-    /**
-     * Check who is/are the winner/s and displays them.
-     */
-    private void announceWinners() {
-        ArrayList <Integer> winners = new ArrayList<>(players.length);
-        int maxScore = 0;
-        for(int i=0; i<players.length; i++){
-            if(players[i].score() <= maxScore){
-                maxScore = players[i].getScore();
-                winners.add(players[i].id);
-            }
-        }
-        System.out.println("Winners are: ");
-        for(int i = 0; i < winners.size(); i++){
-            System.out.println(winners.get(i));
-        }
+    public int getScore(){
+        return score;
     }
-
-    public boolean isSet(int claimerId, ArrayList<Integer> tokensList){
-        int[] first = extractFeatures(tokensList.get(0));
-        int second[] = extractFeatures(tokensList.get(1));
-        int third[] = extractFeatures(tokensList.get(2));
-        for(Player player : players){
-            if(claimerId == player.id){
-                claimer = player;
-            }
-        }
-        boolean isSet = isSet(first, second, third);
-        if(isSet(first, second, third)){
-            setExists = true;
-            for(int slot: claimer.getQueue()){
-                tokensToRemove.add(slot); 
-            }
-            claimer.point(); 
-        }
-        else
-            claimer.penalty();
-        return isSet;
+    public void decreaseHowMany(){
+        howManyTokens--;
     }
-
-    private static int[] extractFeatures(Integer card) {
-        int[] features = new int[4];
-        for (int i = 0; i < 4; i++) {
-            features[i] = (card / (int) Math.pow(3, i)) % 3;
-        }
-        return features;
+    public void increaseHowMany(){
+        howManyTokens++;
     }
-
-    public static boolean isSet(int[] card1, int[] card2, int[] card3) {
-        for (int i = 0; i < 4; i++) {
-            int feature1 = card1[i];
-            int feature2 = card2[i];
-            int feature3 = card3[i];
-
-            // Check if values are either all the same or all different
-            if (!((feature1 == feature2 && feature2 == feature3) || (feature1 != feature2 && feature2 != feature3 && feature1 != feature3))) {
-                return false; // Not a set
-            }
-        }
-        return true; // Form a set
-    }
- 
-
-    }
+    
+}
