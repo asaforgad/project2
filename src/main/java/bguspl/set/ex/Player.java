@@ -195,7 +195,13 @@ public class Player implements Runnable {
             this.queue.remove(0);
             decreaseHowMany();      
         }
-        //add time freeze
+        try {
+            // Sleep for the fixed amount of time
+            Thread.sleep(120000);
+        } catch (InterruptedException e) {
+            // Thread was interrupted, handle interruption if needed
+            System.out.println("Thread was interrupted.");
+        }
     }
     
 

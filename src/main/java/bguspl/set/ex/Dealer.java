@@ -150,6 +150,7 @@ public class Dealer implements Runnable {
     private void updateTimerDisplay(boolean reset) {
         if(!reset){
             
+            
         }
 
         // TODO implement
