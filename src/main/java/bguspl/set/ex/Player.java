@@ -118,7 +118,7 @@ public class Player implements Runnable {
         aiThread = new Thread(() -> {
             env.logger.info("thread " + Thread.currentThread().getName() + " starting.");
             while (!terminate) {
-                int random = (int) ((Math.random() * (12 - 1)) + 1);
+                int random = (int) ((Math.random() * (12 - 0)) + 0);
                 keyPressed(random);
                 // TODO implement player key press simulator
                 try {
@@ -163,6 +163,14 @@ public class Player implements Runnable {
             decreaseHowMany();      
         }    
         env.ui.setScore(id, ++score);
+
+        try {
+            // Sleep for the fixed amount of time
+            Thread.sleep(60000);
+        } catch (InterruptedException e) {
+            // Thread was interrupted, handle interruption if needed
+            System.out.println("Thread was interrupted.");
+        }
         //add time freeze
     }
     //     }

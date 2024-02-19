@@ -1,0 +1,52 @@
+[16:02:49.605] [INFO   ] thread bguspl.set.Main.main() starting.
+[16:02:49.605] [SEVERE ] cannot read configuration file config.properties trying from resources.
+[16:02:49.621] [SEVERE ] configuration file was loaded from resources directory.
+[16:02:50.413] [INFO   ] thread dealer starting.
+[16:02:50.415] [INFO   ] thread dealer starting.
+[16:02:50.541] [SEVERE ] placing card 0 in slot 0
+[16:02:50.647] [SEVERE ] placing card 1 in slot 1
+[16:02:50.758] [SEVERE ] placing card 2 in slot 2
+[16:02:50.859] [SEVERE ] placing card 3 in slot 3
+[16:02:50.973] [SEVERE ] placing card 4 in slot 4
+[16:02:51.078] [SEVERE ] placing card 5 in slot 5
+[16:02:51.189] [SEVERE ] placing card 6 in slot 6
+[16:02:51.304] [SEVERE ] placing card 7 in slot 7
+[16:02:51.417] [SEVERE ] placing card 8 in slot 8
+[16:02:51.528] [SEVERE ] placing card 9 in slot 9
+[16:02:51.638] [SEVERE ] placing card 10 in slot 10
+[16:02:51.749] [SEVERE ] placing card 11 in slot 11
+[16:03:18.573] [SEVERE ] key 83 was pressed by player 1
+[16:03:20.625] [SEVERE ] key 83 was pressed by player 1
+[16:03:21.005] [SEVERE ] key 68 was pressed by player 1
+[16:03:21.336] [SEVERE ] key 82 was pressed by player 1
+[16:03:24.861] [SEVERE ] key 76 was pressed by player 2
+[16:03:25.130] [SEVERE ] key 75 was pressed by player 2
+[16:03:25.619] [SEVERE ] key 73 was pressed by player 2
+[16:03:25.934] [SEVERE ] key 77 was pressed by player 2
+[16:03:26.659] [SEVERE ] key 74 was pressed by player 2
+[16:03:26.956] [SEVERE ] key 75 was pressed by player 2
+[16:03:27.067] [SEVERE ] key 59 was pressed by player 2
+[16:03:27.179] [SEVERE ] key 75 was pressed by player 2
+[16:03:27.210] [SEVERE ] key 83 was pressed by player 1
+[16:03:27.290] [SEVERE ] key 76 was pressed by player 2
+[16:03:27.415] [SEVERE ] key 74 was pressed by player 2
+[16:03:27.493] [SEVERE ] key 70 was pressed by player 1
+[16:03:27.825] [SEVERE ] key 86 was pressed by player 1
+[16:03:28.361] [SEVERE ] key 88 was pressed by player 1
+[16:03:28.841] [SEVERE ] key 83 was pressed by player 1
+[16:03:33.871] [SEVERE ] exit button pressed
+[16:03:34.154] [SEVERE ] removing card from slot 0
+[16:03:34.264] [SEVERE ] removing card from slot 1
+[16:03:34.375] [SEVERE ] removing card from slot 2
+[16:03:34.485] [SEVERE ] removing card from slot 3
+[16:03:34.596] [SEVERE ] removing card from slot 4
+[16:03:34.708] [SEVERE ] removing card from slot 5
+[16:03:34.818] [SEVERE ] removing card from slot 6
+[16:03:34.928] [SEVERE ] removing card from slot 7
+[16:03:35.038] [SEVERE ] removing card from slot 8
+[16:03:35.148] [SEVERE ] removing card from slot 9
+[16:03:35.259] [SEVERE ] removing card from slot 10
+[16:03:35.374] [SEVERE ] removing card from slot 11
+[16:03:35.374] [INFO   ] thread dealer terminated.
+[16:03:35.374] [SEVERE ] thanks for playing... it was fun!
+[16:03:35.374] [INFO   ] thread bguspl.set.Main.main() terminated.
