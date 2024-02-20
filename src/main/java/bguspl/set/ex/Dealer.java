@@ -36,7 +36,7 @@ public class Dealer implements Runnable {
     private volatile boolean terminate;
     private ArrayList <Integer> tokensToRemove;
     Player claimer;
-    boolean setExists;
+    private ArrayList <Integer> announced;
 
     /**
      * The time when the dealer needs to reshuffle the deck due to turn timeout.
@@ -49,8 +49,8 @@ public class Dealer implements Runnable {
         this.players = players;
         deck = IntStream.range(0, env.config.deckSize).boxed().collect(Collectors.toList());
         claimer = null;
-        setExists = false;
         reshuffleTime= System.currentTimeMillis()+env.config.turnTimeoutMillis;
+
     }
     
 
@@ -60,7 +60,10 @@ public class Dealer implements Runnable {
     @Override
     public void run() {
         env.logger.info("thread " + Thread.currentThread().getName() + " starting.");
-        // for(int i =0; i< players.length; i++){c
+        for(Player p : players){
+            new Thread(p,"Player"+p.id).start();
+        }
+        // for(int i =0; i< players.length; i++){
         //     Thread player = new Thread(players[i], "player" +i);
         //     player.start();
         // }
@@ -110,19 +113,29 @@ public class Dealer implements Runnable {
      */
     private void removeCardsFromTable() {
         //if a player gets a set
-        if(setExists){
+        
             while(!tokensToRemove.isEmpty()){
                 int slot = tokensToRemove.remove(0);
-                table.removeCard(slot); 
-            }
+
+                for (Player p : players){
+                        p.getQueue().remove(slot);
+                        if (table.getTokens().get(p.id).contains(slot))
+                            p.decreaseHowMany();
+                    }
+
+                 table.removeCard(slot); 
+
+                }
+                tokensToRemove= null;
+            
         }
-    }
 
 
     /**
      * Check if any cards can be removed from the deck and placed on the table.
      */
     private void placeCardsOnTable() {
+        Collections.shuffle(deck);
         for(int i=0; i<table.slotToCard.length & !deck.isEmpty(); i++){
             if(table.slotToCard[i] == null){
                 Integer card = deck.get(0);
@@ -131,7 +144,6 @@ public class Dealer implements Runnable {
             }     
         }
         
-        setExists = false;
         updateTimerDisplay(true);
     }
 
@@ -147,7 +159,7 @@ public class Dealer implements Runnable {
             // Thread was interrupted, handle interruption if needed
             System.out.println("Thread was interrupted.");
         }
-        // env.ui.setElapsed(sleepDurationMillis);
+        env.ui.setElapsed(1000);
     }
 
     /**
@@ -155,11 +167,15 @@ public class Dealer implements Runnable {
      */
     private void updateTimerDisplay(boolean reset) {
         if(!reset){
-            env.ui.setCountdown(reshuffleTime-System.currentTimeMillis(), false);
+            boolean warn = false;
+            if((reshuffleTime-System.currentTimeMillis()) <= env.config.turnTimeoutWarningMillis){
+                warn = true;
+            }
+            env.ui.setCountdown(reshuffleTime-System.currentTimeMillis(), warn);
         }
         else{
             reshuffleTime = System.currentTimeMillis() + env.config.turnTimeoutMillis;
-            env.ui.setCountdown(reshuffleTime-System.currentTimeMillis(), false);
+            env.ui.setCountdown(env.config.turnTimeoutMillis, false);
         }
     }
 
@@ -171,9 +187,8 @@ public class Dealer implements Runnable {
             deck.add(table.slotToCard[i]);
             table.removeCard(i);
             }
-        Collections.shuffle(deck);
-        setExists = false;
         
+            tokensToRemove=null;
     }
 
     /**
@@ -195,7 +210,7 @@ public class Dealer implements Runnable {
     }
 
     public boolean isSet(int claimerId, ArrayList<Integer> tokensList){
-        int[] first = extractFeatures(tokensList.get(0));
+        int first [] = extractFeatures(tokensList.get(0));
         int second[] = extractFeatures(tokensList.get(1));
         int third[] = extractFeatures(tokensList.get(2));
         for(Player player : players){
@@ -204,13 +219,14 @@ public class Dealer implements Runnable {
             }
         }
         boolean isSet = isSet(first, second, third);
-        if(isSet(first, second, third)){
-            setExists = true;
-            for(int slot: claimer.getQueue()){
-                tokensToRemove.add(slot); 
-            }
+
+        if(isSet){
+            tokensToRemove = tokensList;
+
             claimer.point(); 
-            
+            removeCardsFromTable();
+            placeCardsOnTable();
+ 
         }
         else
             claimer.penalty();
@@ -238,6 +254,9 @@ public class Dealer implements Runnable {
         }
         return true; // Form a set
     }
+
+    public ArrayList<Integer> getAnnounced ()
+    {return announced;}
  
 
     }
