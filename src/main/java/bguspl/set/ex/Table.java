@@ -47,7 +47,7 @@ public class Table {
         this.env = env;
         this.slotToCard = slotToCard;
         this.cardToSlot = cardToSlot;
-        this.tokens = new ArrayList<ArrayList <Integer>>();
+        this.tokens = new ArrayList<ArrayList <Integer>>(env.config.players);
         this.slotLocks = new Object[12];
         for(int i= 0; i<slotLocks.length; i++){
             slotLocks[i] = new Object(); 
@@ -135,10 +135,11 @@ public class Table {
      * @param slot   - the slot on which to place the token.
      */
     public void placeToken(int player, int slot) {
-        while (tokens.size()<player){
+        // while (tokens.size()<player){
+            System.out.println("im in place token");
             tokens.get(player).add(slot);
             env.ui.placeToken(player, slot);
-        }
+        // }
            
     }
 
