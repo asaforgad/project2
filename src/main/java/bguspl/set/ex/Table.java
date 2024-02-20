@@ -33,6 +33,8 @@ public class Table {
 
     protected ArrayList <ArrayList<Integer>> tokens;
 
+    public Object[] slotLocks;
+
     /**
      * Constructor for testing.
      *
@@ -46,6 +48,10 @@ public class Table {
         this.slotToCard = slotToCard;
         this.cardToSlot = cardToSlot;
         this.tokens = new ArrayList<ArrayList <Integer>>();
+        this.slotLocks = new Object[12];
+        for(int i= 0; i<slotLocks.length; i++){
+            slotLocks[i] = new Object(); 
+        }
     }
 
     /**
@@ -119,6 +125,7 @@ public class Table {
             if(tokens.get(i).contains(slot))
                 removeToken(i, slot);
         }
+        
 
     }
 
@@ -128,12 +135,11 @@ public class Table {
      * @param slot   - the slot on which to place the token.
      */
     public void placeToken(int player, int slot) {
-        while (tokens.size()<player)
-            tokens.add(null);
-        tokens.get(player).add(slot);
-        env.ui.placeToken(player, slot);
-        
-        
+        while (tokens.size()<player){
+            tokens.get(player).add(slot);
+            env.ui.placeToken(player, slot);
+        }
+           
     }
 
     /**
@@ -158,6 +164,10 @@ public class Table {
 
     public ArrayList <ArrayList<Integer>> getTokens(){
         return tokens;
+    }
+
+    public Object getLock (int slot){
+        return slotLocks[slot];
     }
 
 }
