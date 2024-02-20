@@ -59,6 +59,8 @@ public class Player implements Runnable {
 
     private int howManyTokens; 
 
+    
+
     /**
      * The class constructor.
      *
@@ -88,7 +90,9 @@ public class Player implements Runnable {
         if (!human) createArtificialIntelligence();
 
         while (!terminate) {
-            while (!queue.isEmpty()){
+            while (!queue.isEmpty() ){
+
+            synchronized (table.getLock(queue.get(0))){
                 int tokenToSlot =queue.remove(0);
                 if(table.tokens.get(id).contains(tokenToSlot)){
                     table.removeToken(id,tokenToSlot); decreaseHowMany();
@@ -96,18 +100,32 @@ public class Player implements Runnable {
                 else{
                     table.placeToken(id, tokenToSlot); increaseHowMany();
                 }
+                notifyAll();
             }
-            while (howManyTokens==3){
-                //wake the dealer
-                // notify();
-
-                 dealer.isSet(id, table.getTokens().get(id));
-
-            }
+        }
         
 
+            while (howManyTokens==3){
+            
+                dealer.getAnnounced().add(id);
+                
+                while (!(dealer.getAnnounced().get(0)==id)){
+                    try {
+                        synchronized (this) { wait(); }
+                    } catch (InterruptedException ignored) {}
+            }
+
+            notifyAll();
+            synchronized(dealer){
+                dealer.isSet(id, table.getTokens().get(id));
+            
+             }
+        
+    }
         if (!human) try { aiThread.join(); } catch (InterruptedException ignored) {}
-        env.logger.info("thread " + Thread.currentThread().getName() + " terminated.");}
+        env.logger.info("thread " + Thread.currentThread().getName() + " terminated.");
+    
+        }
     }
 
     /**
@@ -119,7 +137,7 @@ public class Player implements Runnable {
         aiThread = new Thread(() -> {
             env.logger.info("thread " + Thread.currentThread().getName() + " starting.");
             while (!terminate) {
-                int random = (int) (Math.random() * 12 );
+                int random = (int) (Math.random() * env.config.tableSize);
                 keyPressed(random);
                 try {
                     synchronized (this) { wait(); }
@@ -135,6 +153,7 @@ public class Player implements Runnable {
      */
     public void terminate() {
         terminate = true;
+        playerThread.interrupt();
     }
     
 
@@ -144,7 +163,10 @@ public class Player implements Runnable {
      * @param slot - the slot corresponding to the key pressed.
      */
     public void keyPressed(int slot) {
-        queue.add(slot);
+        while(queue.size()<=3){
+            queue.add(slot);
+        }
+        
     }
 
 
@@ -158,12 +180,13 @@ public class Player implements Runnable {
     public void point() {
         
         int ignored = table.countCards(); // this part is just for demonstration in the unit tests
-        while(!this.queue.isEmpty()){
-            this.queue.remove(0);
+        
+            decreaseHowMany();decreaseHowMany();      
             decreaseHowMany();      
-        }    
+        
         env.ui.setScore(id, ++score);
 
+        env.ui.setFreeze(id,env.config.pointFreezeMillis);
         try {
             // Sleep for the fixed amount of time
             Thread.sleep(env.config.pointFreezeMillis);
@@ -172,7 +195,6 @@ public class Player implements Runnable {
             System.out.println("Thread was interrupted.");
         }
    
-        env.ui.setFreeze(id,env.config.pointFreezeMillis);
         
     }
 
