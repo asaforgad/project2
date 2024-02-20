@@ -78,6 +78,7 @@ public class Player implements Runnable {
         this.dealer = dealer;
         this.queue = new ArrayList<Integer>(3);
         howManyTokens=0;
+        terminate = false;
     }
 
     /**
@@ -85,22 +86,31 @@ public class Player implements Runnable {
      */
     @Override
     public void run() {
-        playerThread = Thread.currentThread();
+    playerThread = Thread.currentThread();
         env.logger.info("thread " + Thread.currentThread().getName() + " starting.");
         if (!human) createArtificialIntelligence();
 
         while (!terminate) {
-            while (!queue.isEmpty() ){
+            queue.add(1);
+            while (!queue.isEmpty()){
+                System.out.println("not empty");
 
-            synchronized (table.getLock(queue.get(0))){
+            // synchronized (table.getLock(queue.get(0))){
                 int tokenToSlot =queue.remove(0);
-                if(table.tokens.get(id).contains(tokenToSlot)){
-                    table.removeToken(id,tokenToSlot); decreaseHowMany();
+                System.out.println("removed from queue");
+
+                if(!(table.tokens.get(id)).isEmpty() && (table.tokens.get(id)).contains(tokenToSlot)){
+                    table.removeToken(id,tokenToSlot); 
+                    decreaseHowMany();
+                    System.out.println("removed");
                 }
                 else{
-                    table.placeToken(id, tokenToSlot); increaseHowMany();
-                }
-                notifyAll();
+                    System.out.println("hello");
+                    table.placeToken(id, tokenToSlot); 
+                    increaseHowMany();
+                    System.out.println("put  on table");
+                // }
+                // notifyAll();
             }
         }
         
@@ -163,12 +173,12 @@ public class Player implements Runnable {
      * @param slot - the slot corresponding to the key pressed.
      */
     public void keyPressed(int slot) {
-        while(queue.size()<=3){
-            queue.add(slot);
-        }
-        
+            
+            if(queue.size()<=3 & this.table.slotToCard[slot] != null){
+                System.out.println(slot);
+                    queue.add(slot);          
     }
-
+}
 
     /**
      * Award a point to a player and perform other related actions.
