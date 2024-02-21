@@ -111,6 +111,8 @@ public class Dealer implements Runnable {
      */
     private void removeCardsFromTable() {
         //if a player gets a set
+
+        synchronized(table){
         
             while(!tokensToRemove.isEmpty()){
                 int slot = tokensToRemove.remove(0);
@@ -128,21 +130,24 @@ public class Dealer implements Runnable {
             cleanTokensToRemove();
             
         }
+    }
 
 
     /**
      * Check if any cards can be removed from the deck and placed on the table.
      */
     private void placeCardsOnTable() {
-        Collections.shuffle(deck);
-        for(int i=0; i<table.slotToCard.length & !deck.isEmpty(); i++){
-            if(table.slotToCard[i] == null){
-                Integer card = deck.get(0);
-                deck.remove(0);
-                table.placeCard(card, i);       
-            }     
+
+        synchronized(table){
+            Collections.shuffle(deck);
+            for(int i=0; i<table.slotToCard.length & !deck.isEmpty(); i++){
+                if(table.slotToCard[i] == null){
+                    Integer card = deck.get(0);
+                    deck.remove(0);
+                    table.placeCard(card, i);       
+                }     
+            }
         }
-        
     }
 
     /**
@@ -185,8 +190,13 @@ public class Dealer implements Runnable {
             deck.add(table.slotToCard[i]);
             table.removeCard(i);
             }
-        
             cleanTokensToRemove();
+
+            for(Player p :players){
+                p.myTokens.clear();
+                p.getQueue().clear();
+            }
+
     }
 
     /**
@@ -216,6 +226,7 @@ public class Dealer implements Runnable {
             firstSet = waitingForCheck.remove(0);
             Player claimer = players[claimerId];
             setExist = isSet(claimerId, firstSet);
+
             if(setExist){
                 tokensToRemove = firstSet;
                 claimer.point(); 
