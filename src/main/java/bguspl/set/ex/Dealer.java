@@ -154,7 +154,6 @@ public class Dealer implements Runnable {
      * Sleep for a fixed amount of time or until the thread is awakened for some purpose.
      */
     private void sleepUntilWokenOrTimeout() {
-
         try {
             // Sleep for the fixed amount of time
             Thread.sleep(1000);

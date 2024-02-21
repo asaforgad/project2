@@ -35,8 +35,6 @@ public class Table {
 
     // public ArrayList <ArrayList<Integer>> tokens;
 
-    public Object[] slotLocks;
-
     protected int numOfPlayers;
 
 
@@ -59,11 +57,6 @@ public class Table {
             for(int j = 0; j< 12; j++){
                 this.tokens[i][j] = false;
             }
-        }
-        // this.tokens = new ArrayList<ArrayList <Integer>>(env.config.players);
-        this.slotLocks = new Object[12];
-        for(int i= 0; i<slotLocks.length; i++){
-            slotLocks[i] = new Object(); 
         }
     }
 
@@ -111,7 +104,7 @@ public class Table {
      *
      * @post - the card placed is on the table, in the assigned slot.
      */
-    public void placeCard(int card, int slot) {
+    public synchronized void placeCard(int card, int slot) {
         try {
             Thread.sleep(env.config.tableDelayMillis);
         } catch (InterruptedException ignored) {}
@@ -125,7 +118,7 @@ public class Table {
      * Removes a card from a grid slot on the table.
      * @param slot - the slot from which to remove the card.
      */
-    public void removeCard(int slot) {
+    public synchronized void removeCard(int slot) {
         try {
             Thread.sleep(env.config.tableDelayMillis);
         } catch (InterruptedException ignored) {}
@@ -139,16 +132,7 @@ public class Table {
         cardToSlot[slotToCard[slot]]= null;
         slotToCard[slot]=null;
         env.ui.removeCard(slot);
-
-
-
-
-        // for (int i =0 ; i<numOfPlayers ; i++){
-        //     if(tokens.get(i).contains(slot))
-        //         removeToken(i, slot);
-        // }
         
-
     }
 
     /**
@@ -156,15 +140,13 @@ public class Table {
      * @param player - the player the token belongs to.
      * @param slot   - the slot on which to place the token.
      */
-    public void placeToken(int player, int slot) {
-        // while (tokens.size()<player){
+    public synchronized void placeToken(int player, int slot) {
+        
             System.out.println("im in place token");
             tokens[player][slot] = true;
 
-            // tokens.get(player).add(slot);
             env.ui.placeToken(player, slot);
-        // }
-           
+        
     }
 
     /**
@@ -173,7 +155,7 @@ public class Table {
      * @param slot   - the slot from which to remove the token.
      * @return       - true iff a token was successfully removed.
      */
-    public boolean removeToken(int player, int slot) {
+    public synchronized boolean removeToken(int player, int slot) {
 
         boolean removed = false;
 
@@ -187,32 +169,8 @@ public class Table {
          return removed;
         }
 
-
-
-    //     for (int i =0 ; i < numOfPlayers; i++){
-    //         tokens[slot][i] = false;
-    //     }
-
-        
-       
-
-
-    //         // for(Integer i: tokens.get(player)){
-    //         //     if (i.equals(slot)){
-    //         //         tokens.get(player).remove(slot);
-    //         //     }
-
-    //         return true;
-    //     }
-    //     return false;
-    // }
-
     public boolean[][] getTokens(){
         return tokens;
-    }
-
-    public Object getLock (int slot){
-        return slotLocks[slot];
     }
 
 }
