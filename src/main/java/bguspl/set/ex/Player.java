@@ -59,6 +59,8 @@ public class Player implements Runnable {
 
     private int howManyTokens; 
 
+    public ArrayList <Integer> myTokens; 
+
     
 
     /**
@@ -91,54 +93,39 @@ public class Player implements Runnable {
         if (!human) createArtificialIntelligence();
 
         while (!terminate) {
-            // queue.add(1);
             while (!queue.isEmpty()){
                 System.out.println("not empty");
 
-            // synchronized (table.getLock(queue.get(0))){
-                int slot =queue.remove(0);
+                int currentToken =queue.remove(0);
                 System.out.println("removed from queue");
 
-                if(table.tokens[this.id][slot]==true){
-                    table.removeToken(id,slot); 
-                    decreaseHowMany();
+                if(table.tokens[this.id][currentToken]==true){
+                    table.removeToken(id,currentToken); 
+                    myTokens.remove(currentToken);
                     System.out.println("removed");
                 }
                 else{
                     System.out.println("hello");
-                    table.placeToken(id, slot); 
-                    increaseHowMany();
+                    table.placeToken(id, currentToken); 
+                    myTokens.add(currentToken);
+                    if (myTokens.size()==3)
+                        checkDealer();
                     System.out.println("put  on table");
-                // }
-                // notifyAll();
+
             }
         }
-        
-
-            while (howManyTokens==3){
-            
-                dealer.getAnnounced().add(id);
-                
-                while (!(dealer.getAnnounced().get(0)==id)){
-                    try {
-                        synchronized (this) { wait(); }
-                    } catch (InterruptedException ignored) {}
-            }
-
-            notifyAll();
-            synchronized(dealer){
-                dealer.checkMySet(id, table.tokens[id]);
-            
-             }
-        
-    }
+    
         if (!human) try { aiThread.join(); } catch (InterruptedException ignored) {}
         env.logger.info("thread " + Thread.currentThread().getName() + " terminated.");
     
         }
     }
 
-    /**
+    void checkDealer(){
+
+
+    }
+  /**
      * Creates an additional thread for an AI (computer) player. The main loop of this thread repeatedly generates
      * key presses. If the queue of key presses is full, the thread waits until it is not full.
      */
