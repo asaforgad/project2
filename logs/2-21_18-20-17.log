@@ -1,0 +1,108 @@
+[18:20:17.919] [INFO   ] thread bguspl.set.Main.main() starting.
+[18:20:17.921] [SEVERE ] cannot read configuration file config.properties trying from resources.
+[18:20:17.922] [SEVERE ] configuration file was loaded from resources directory.
+[18:20:19.925] [INFO   ] thread dealer starting.
+[18:20:19.925] [INFO   ] thread dealer starting.
+[18:20:19.926] [INFO   ] thread Player0 starting.
+[18:20:19.926] [INFO   ] thread Player1 starting.
+[18:20:20.033] [SEVERE ] placing card 16 in slot 0
+[18:20:20.134] [SEVERE ] placing card 44 in slot 1
+[18:20:20.239] [SEVERE ] placing card 6 in slot 2
+[18:20:20.340] [SEVERE ] placing card 39 in slot 3
+[18:20:20.443] [SEVERE ] placing card 21 in slot 4
+[18:20:20.544] [SEVERE ] placing card 78 in slot 5
+[18:20:20.645] [SEVERE ] placing card 69 in slot 6
+[18:20:20.747] [SEVERE ] placing card 54 in slot 7
+[18:20:20.851] [SEVERE ] placing card 34 in slot 8
+[18:20:20.956] [SEVERE ] placing card 61 in slot 9
+[18:20:21.057] [SEVERE ] placing card 80 in slot 10
+[18:20:21.157] [SEVERE ] placing card 40 in slot 11
+[18:20:21.505] [SEVERE ] key 81 was pressed by player 1
+[18:20:21.505] [SEVERE ] player 1 placing token on slot 0
+[18:20:21.912] [SEVERE ] key 81 was pressed by player 1
+[18:20:21.912] [SEVERE ] removing player 1 token from slot 0
+[18:20:22.159] [SEVERE ] updating countdown to 57765
+[18:20:22.932] [SEVERE ] key 80 was pressed by player 2
+[18:20:22.932] [SEVERE ] player 2 placing token on slot 3
+[18:20:23.162] [SEVERE ] updating countdown to 56762
+[18:20:23.230] [SEVERE ] key 79 was pressed by player 2
+[18:20:23.230] [SEVERE ] player 2 placing token on slot 2
+[18:20:23.780] [SEVERE ] key 76 was pressed by player 2
+[18:20:23.780] [SEVERE ] player 2 placing token on slot 6
+[18:20:24.167] [SEVERE ] updating countdown to 55757
+[18:20:25.171] [SEVERE ] updating countdown to 54753
+[18:20:25.727] [SEVERE ] key 76 was pressed by player 2
+[18:20:25.980] [SEVERE ] key 79 was pressed by player 2
+[18:20:26.177] [SEVERE ] updating countdown to 53747
+[18:20:26.276] [SEVERE ] key 80 was pressed by player 2
+[18:20:26.745] [SEVERE ] key 81 was pressed by player 1
+[18:20:26.745] [SEVERE ] player 1 placing token on slot 0
+[18:20:27.179] [SEVERE ] updating countdown to 52745
+[18:20:27.506] [SEVERE ] key 87 was pressed by player 1
+[18:20:27.507] [SEVERE ] player 1 placing token on slot 1
+[18:20:27.940] [SEVERE ] key 83 was pressed by player 1
+[18:20:27.941] [SEVERE ] player 1 placing token on slot 5
+[18:20:28.184] [SEVERE ] updating countdown to 51740
+[18:20:28.698] [SEVERE ] key 83 was pressed by player 1
+[18:20:28.957] [SEVERE ] key 87 was pressed by player 1
+[18:20:29.093] [SEVERE ] key 81 was pressed by player 1
+[18:20:29.190] [SEVERE ] updating countdown to 50734
+[18:20:29.580] [SEVERE ] key 76 was pressed by player 2
+[18:20:29.785] [SEVERE ] key 80 was pressed by player 2
+[18:20:29.787] [SEVERE ] key 79 was pressed by player 2
+[18:20:30.194] [SEVERE ] updating countdown to 49730
+[18:20:31.201] [SEVERE ] updating countdown to 48723
+[18:20:32.204] [SEVERE ] updating countdown to 47720
+[18:20:33.210] [SEVERE ] updating countdown to 46714
+[18:20:34.211] [SEVERE ] updating countdown to 45713
+[18:20:35.217] [SEVERE ] updating countdown to 44707
+[18:20:36.222] [SEVERE ] updating countdown to 43702
+[18:20:37.226] [SEVERE ] updating countdown to 42698
+[18:20:38.232] [SEVERE ] updating countdown to 41692
+[18:20:39.238] [SEVERE ] updating countdown to 40686
+[18:20:40.242] [SEVERE ] updating countdown to 39683
+[18:20:41.246] [SEVERE ] updating countdown to 38679
+[18:20:42.250] [SEVERE ] updating countdown to 37674
+[18:20:43.255] [SEVERE ] updating countdown to 36669
+[18:20:43.397] [SEVERE ] exit button pressed
+[18:20:44.259] [SEVERE ] updating countdown to 35665
+[18:20:44.259] [SEVERE ] updating countdown to 35665
+[18:20:44.361] [SEVERE ] removing player 1 token from slot 0
+[18:20:44.361] [SEVERE ] removing player 2 token from slot 0
+[18:20:44.362] [SEVERE ] removing card from slot 0
+[18:20:44.467] [SEVERE ] removing player 1 token from slot 1
+[18:20:44.468] [SEVERE ] removing player 2 token from slot 1
+[18:20:44.468] [SEVERE ] removing card from slot 1
+[18:20:44.569] [SEVERE ] removing player 1 token from slot 2
+[18:20:44.570] [SEVERE ] removing player 2 token from slot 2
+[18:20:44.570] [SEVERE ] removing card from slot 2
+[18:20:44.671] [SEVERE ] removing player 1 token from slot 3
+[18:20:44.672] [SEVERE ] removing player 2 token from slot 3
+[18:20:44.672] [SEVERE ] removing card from slot 3
+[18:20:44.774] [SEVERE ] removing player 1 token from slot 4
+[18:20:44.775] [SEVERE ] removing player 2 token from slot 4
+[18:20:44.776] [SEVERE ] removing card from slot 4
+[18:20:44.879] [SEVERE ] removing player 1 token from slot 5
+[18:20:44.879] [SEVERE ] removing player 2 token from slot 5
+[18:20:44.880] [SEVERE ] removing card from slot 5
+[18:20:44.984] [SEVERE ] removing player 1 token from slot 6
+[18:20:44.984] [SEVERE ] removing player 2 token from slot 6
+[18:20:44.985] [SEVERE ] removing card from slot 6
+[18:20:45.086] [SEVERE ] removing player 1 token from slot 7
+[18:20:45.086] [SEVERE ] removing player 2 token from slot 7
+[18:20:45.087] [SEVERE ] removing card from slot 7
+[18:20:45.189] [SEVERE ] removing player 1 token from slot 8
+[18:20:45.191] [SEVERE ] removing player 2 token from slot 8
+[18:20:45.192] [SEVERE ] removing card from slot 8
+[18:20:45.295] [SEVERE ] removing player 1 token from slot 9
+[18:20:45.295] [SEVERE ] removing player 2 token from slot 9
+[18:20:45.296] [SEVERE ] removing card from slot 9
+[18:20:45.400] [SEVERE ] removing player 1 token from slot 10
+[18:20:45.401] [SEVERE ] removing player 2 token from slot 10
+[18:20:45.401] [SEVERE ] removing card from slot 10
+[18:20:45.504] [SEVERE ] removing player 1 token from slot 11
+[18:20:45.505] [SEVERE ] removing player 2 token from slot 11
+[18:20:45.505] [SEVERE ] removing card from slot 11
+[18:20:45.509] [INFO   ] thread dealer terminated.
+[18:20:45.509] [SEVERE ] thanks for playing... it was fun!
+[18:20:45.509] [INFO   ] thread bguspl.set.Main.main() terminated.

@@ -48,10 +48,11 @@ public class Dealer implements Runnable {
         this.env = env;
         this.table = table;
         this.players = players;
-        deck = IntStream.range(0, env.config.deckSize).boxed().collect(Collectors.toList());
-        claimer = null;
-        reshuffleTime= System.currentTimeMillis()+env.config.turnTimeoutMillis;
-        tokensToRemove = new ArrayList<Integer>(3);
+        this.deck = IntStream.range(0, env.config.deckSize).boxed().collect(Collectors.toList());
+        this.claimer = null;
+        this.reshuffleTime= System.currentTimeMillis()+env.config.turnTimeoutMillis;
+        this.tokensToRemove = new ArrayList<Integer>(3);
+        this.waitingForCheck = new ArrayList<ArrayList<Integer>>();
 
     }
     
@@ -153,15 +154,14 @@ public class Dealer implements Runnable {
     /**
      * Sleep for a fixed amount of time or until the thread is awakened for some purpose.
      */
+
+     
     private void sleepUntilWokenOrTimeout() {
         try {
-            // Sleep for the fixed amount of time
-            Thread.sleep(1000);
+            Thread.sleep(700);
         } catch (InterruptedException e) {
-            // Thread was interrupted, handle interruption if needed
             System.out.println("Thread was interrupted.");
         }
-        // env.ui.setElapsed(1000);
     }
 
     /**
@@ -231,14 +231,28 @@ public class Dealer implements Runnable {
                 claimer.point(); 
                 removeCardsFromTable();
                 placeCardsOnTable();
+                removeSetsContainSameValue(firstSet);
             }
             else{
-                claimer.penalty();
+                claimer.penalty();                
             }
+            
             claimer.checked = true;
-            // claimer.notifyAll();
+            claimer.notifyAll();
             }
         return setExist;
+    }
+
+    public void removeSetsContainSameValue(ArrayList<Integer> firstSet){
+        for (ArrayList<Integer> certainSet : waitingForCheck){
+            if (certainSet.contains(firstSet.remove(2))||
+            certainSet.contains(firstSet.remove(1))||
+            certainSet.contains(firstSet.remove(0)))
+            {
+                waitingForCheck.remove(certainSet);
+                continue;
+            }
+        }
     }
 
 

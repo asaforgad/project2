@@ -194,17 +194,22 @@ public class Player implements Runnable {
         int ignored = table.countCards(); // this part is just for demonstration in the unit tests  
         myTokens.clear();
         env.ui.setScore(id, ++score);
-        env.ui.setFreeze(id,env.config.pointFreezeMillis);
 
+        long timeLeft= env.config.pointFreezeMillis;
+        int loops = (int)timeLeft/1000;
+        int constLoops = loops;
+
+        while(loops>0){
+            env.ui.setFreeze(id, timeLeft);
+            if(loops!=0){
         try {
             // Sleep for the fixed amount of time
-            Thread.sleep(env.config.pointFreezeMillis);
+            Thread.sleep(env.config.pointFreezeMillis/constLoops);
         } catch (InterruptedException e) {
-            // Thread was interrupted, handle interruption if needed
-            System.out.println("Thread was interrupted.");
-        }
-   
-        
+         }
+      }
+        loops--;
+    }
     }
 
 
@@ -223,7 +228,7 @@ public class Player implements Runnable {
             if(loops!=0){
         try {
             // Sleep for the fixed amount of time
-            Thread.sleep(env.config.pointFreezeMillis/constLoops);
+            Thread.sleep(env.config.penaltyFreezeMillis/constLoops);
         } catch (InterruptedException e) {
         }
     }
