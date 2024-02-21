@@ -38,6 +38,8 @@ public class Dealer implements Runnable {
     Player claimer;
     private ArrayList <Integer> announced;
 
+    protected ArrayList<ArrayList<Integer>> waitingForCheck;
+
     /**
      * The time when the dealer needs to reshuffle the deck due to turn timeout.
      */
@@ -117,7 +119,7 @@ public class Dealer implements Runnable {
                 for (Player p : players){
                         p.getQueue().remove(slot);
                         if (table.tokens[slot][p.id] == true)
-                            p.decreaseHowMany();
+                            p.myTokens.remove(slot);
                     }
 
                  table.removeCard(slot); 

@@ -57,9 +57,10 @@ public class Player implements Runnable {
 
     private ArrayList <Integer> queue;
 
-    private int howManyTokens; 
-
     public ArrayList <Integer> myTokens; 
+
+    public boolean checked;
+
 
     
 
@@ -79,8 +80,8 @@ public class Player implements Runnable {
         this.human = human;
         this.dealer = dealer;
         this.queue = new ArrayList<Integer>(3);
-        howManyTokens=0;
         terminate = false;
+        checked = false;
     }
 
     /**
@@ -92,10 +93,9 @@ public class Player implements Runnable {
         env.logger.info("thread " + Thread.currentThread().getName() + " starting.");
         if (!human) createArtificialIntelligence();
 
-        while (!terminate) {
+        try { while (!terminate) {
             while (!queue.isEmpty()){
                 System.out.println("not empty");
-
                 int currentToken =queue.remove(0);
                 System.out.println("removed from queue");
 
@@ -111,19 +111,33 @@ public class Player implements Runnable {
                     if (myTokens.size()==3)
                         checkDealer();
                     System.out.println("put  on table");
+                }
 
             }
         }
-    
+            
+        } catch (InterruptedException e) {}
+
         if (!human) try { aiThread.join(); } catch (InterruptedException ignored) {}
         env.logger.info("thread " + Thread.currentThread().getName() + " terminated.");
     
         }
-    }
-
-    void checkDealer(){
+    
 
 
+    private void checkDealer() throws InterruptedException{ 
+
+        synchronized(dealer.waitingForCheck){
+            dealer.waitingForCheck.add(myTokens);
+            dealer.waitingForCheck.notifyAll();
+        }
+
+        synchronized(this){
+            while(!checked){
+                playerThread.wait();
+            }
+            checked = false;
+        } 
     }
   /**
      * Creates an additional thread for an AI (computer) player. The main loop of this thread repeatedly generates
@@ -176,10 +190,7 @@ public class Player implements Runnable {
      */
     public void point() {
         
-        int ignored = table.countCards(); // this part is just for demonstration in the unit tests
-        
-            decreaseHowMany();decreaseHowMany();      
-            decreaseHowMany();      
+        int ignored = table.countCards(); // this part is just for demonstration in the unit tests  
         
         env.ui.setScore(id, ++score);
 
@@ -222,12 +233,6 @@ public class Player implements Runnable {
 
     public int getScore(){
         return score;
-    }
-    public void decreaseHowMany(){
-        howManyTokens--;
-    }
-    public void increaseHowMany(){
-        howManyTokens++;
     }
     
 }
