@@ -37,7 +37,6 @@ public class Dealer implements Runnable {
     private ArrayList <Integer> tokensToRemove;
     Player claimer;
     private ArrayList <Integer> announced;
-
     protected ArrayList<ArrayList<Integer>> waitingForCheck;
 
     /**
@@ -210,18 +209,27 @@ public class Dealer implements Runnable {
 
     public boolean checkMySet(int claimerId, boolean[] playerTokens){
 
-        ArrayList<Integer> mySet = new ArrayList <Integer>(3);
-        int numOfTokens = 0;
-        for(int i = 0; i< playerTokens.length && numOfTokens <= 3; i++){
-            if(playerTokens[i] == true){
-                mySet.add(i);
-                numOfTokens++;
+        ArrayList<Integer> firstSet;
+        boolean setExist;
+
+        synchronized(waitingForCheck){
+            firstSet = waitingForCheck.remove(0);
+            Player claimer = players[claimerId];
+            setExist = isSet(claimerId, firstSet);
+            if(setExist){
+                tokensToRemove = firstSet;
+                claimer.point(); 
+                removeCardsFromTable();
+                placeCardsOnTable();
             }
-
-        }
-        return isSet(claimerId, mySet);
+            else{
+                claimer.penalty();
+            }
+            claimer.checked = true;
+            // claimer.notifyAll();
+            }
+        return setExist;
     }
-
 
 
     public boolean isSet(int claimerId, ArrayList<Integer> mySet){
@@ -233,18 +241,8 @@ public class Dealer implements Runnable {
                 claimer = player;
             }
         }
-        boolean isSet = isSet(first, second, third);
-
-        if(isSet){
-            tokensToRemove = mySet;
-            claimer.point(); 
-            removeCardsFromTable();
-            placeCardsOnTable();
- 
-        }
-        else
-            claimer.penalty();
-        return isSet;
+        boolean compareFeatures = compareFeatures(first, second, third);
+        return compareFeatures;
     }
 
     private static int[] extractFeatures(Integer card) {
@@ -255,7 +253,7 @@ public class Dealer implements Runnable {
         return features;
     }
 
-    public static boolean isSet(int[] card1, int[] card2, int[] card3) {
+    public static boolean compareFeatures(int[] card1, int[] card2, int[] card3) {
         for (int i = 0; i < 4; i++) {
             int feature1 = card1[i];
             int feature2 = card2[i];

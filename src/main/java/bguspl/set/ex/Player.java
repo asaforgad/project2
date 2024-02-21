@@ -82,6 +82,7 @@ public class Player implements Runnable {
         this.queue = new ArrayList<Integer>(3);
         terminate = false;
         checked = false;
+        myTokens = new ArrayList<Integer>(3);
     }
 
     /**
@@ -191,10 +192,10 @@ public class Player implements Runnable {
     public void point() {
         
         int ignored = table.countCards(); // this part is just for demonstration in the unit tests  
-        
+        myTokens.clear();
         env.ui.setScore(id, ++score);
-
         env.ui.setFreeze(id,env.config.pointFreezeMillis);
+
         try {
             // Sleep for the fixed amount of time
             Thread.sleep(env.config.pointFreezeMillis);
@@ -212,14 +213,22 @@ public class Player implements Runnable {
      */
     public void penalty() {
         int ignored = table.countCards(); // this part is just for demonstration in the unit tests
+
+        long timeLeft= env.config.penaltyFreezeMillis;
+        int loops = (int)timeLeft/1000;
+        int constLoops = loops;
+
+        while(loops>0){
+            env.ui.setFreeze(id, timeLeft);
+            if(loops!=0){
         try {
             // Sleep for the fixed amount of time
-            Thread.sleep(env.config.pointFreezeMillis);
+            Thread.sleep(env.config.pointFreezeMillis/constLoops);
         } catch (InterruptedException e) {
-            // Thread was interrupted, handle interruption if needed
-            System.out.println("Thread was interrupted.");
         }
-        env.ui.setFreeze(id, env.config.penaltyFreezeMillis);
+    }
+loops--;
+    }
     }
     
 
