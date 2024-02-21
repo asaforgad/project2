@@ -91,22 +91,22 @@ public class Player implements Runnable {
         if (!human) createArtificialIntelligence();
 
         while (!terminate) {
-            queue.add(1);
+            // queue.add(1);
             while (!queue.isEmpty()){
                 System.out.println("not empty");
 
             // synchronized (table.getLock(queue.get(0))){
-                int tokenToSlot =queue.remove(0);
+                int slot =queue.remove(0);
                 System.out.println("removed from queue");
 
-                if(!(table.tokens.get(id)).isEmpty() && (table.tokens.get(id)).contains(tokenToSlot)){
-                    table.removeToken(id,tokenToSlot); 
+                if(table.tokens[this.id][slot]==true){
+                    table.removeToken(id,slot); 
                     decreaseHowMany();
                     System.out.println("removed");
                 }
                 else{
                     System.out.println("hello");
-                    table.placeToken(id, tokenToSlot); 
+                    table.placeToken(id, slot); 
                     increaseHowMany();
                     System.out.println("put  on table");
                 // }
@@ -127,7 +127,7 @@ public class Player implements Runnable {
 
             notifyAll();
             synchronized(dealer){
-                dealer.isSet(id, table.getTokens().get(id));
+                dealer.checkMySet(id, table.tokens[id]);
             
              }
         
