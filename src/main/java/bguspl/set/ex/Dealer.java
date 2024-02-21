@@ -116,7 +116,7 @@ public class Dealer implements Runnable {
 
                 for (Player p : players){
                         p.getQueue().remove(slot);
-                        if (table.getTokens().get(p.id).contains(slot))
+                        if (table.tokens[slot][p.id] == true)
                             p.decreaseHowMany();
                     }
 
@@ -206,10 +206,26 @@ public class Dealer implements Runnable {
         }
     }
 
-    public boolean isSet(int claimerId, ArrayList<Integer> tokensList){
-        int first [] = extractFeatures(tokensList.get(0));
-        int second[] = extractFeatures(tokensList.get(1));
-        int third[] = extractFeatures(tokensList.get(2));
+    public boolean checkMySet(int claimerId, boolean[] playerTokens){
+
+        ArrayList<Integer> mySet = new ArrayList <Integer>(3);
+        int numOfTokens = 0;
+        for(int i = 0; i< playerTokens.length && numOfTokens <= 3; i++){
+            if(playerTokens[i] == true){
+                mySet.add(i);
+                numOfTokens++;
+            }
+
+        }
+        return isSet(claimerId, mySet);
+    }
+
+
+
+    public boolean isSet(int claimerId, ArrayList<Integer> mySet){
+        int first[] = extractFeatures(table.slotToCard[mySet.get(0)]);
+        int second[] = extractFeatures(table.slotToCard[mySet.get(1)]);
+        int third[] = extractFeatures(table.slotToCard[mySet.get(2)]);
         for(Player player : players){
             if(claimerId == player.id){
                 claimer = player;
@@ -218,8 +234,7 @@ public class Dealer implements Runnable {
         boolean isSet = isSet(first, second, third);
 
         if(isSet){
-            tokensToRemove = tokensList;
-
+            tokensToRemove = mySet;
             claimer.point(); 
             removeCardsFromTable();
             placeCardsOnTable();
