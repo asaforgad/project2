@@ -31,9 +31,15 @@ public class Table {
      */
     protected final Integer[] cardToSlot; // slot per card (if any)
 
-    protected ArrayList <ArrayList<Integer>> tokens;
+    protected boolean[][] tokens;
+
+    // public ArrayList <ArrayList<Integer>> tokens;
 
     public Object[] slotLocks;
+
+    protected int numOfPlayers;
+
+
 
     /**
      * Constructor for testing.
@@ -47,7 +53,14 @@ public class Table {
         this.env = env;
         this.slotToCard = slotToCard;
         this.cardToSlot = cardToSlot;
-        this.tokens = new ArrayList<ArrayList <Integer>>(env.config.players);
+        numOfPlayers = env.config.players;
+        this.tokens = new boolean[env.config.players][12];
+        for(int i = 0; i< env.config.players; i++){
+            for(int j = 0; j< 12; j++){
+                this.tokens[i][j] = false;
+            }
+        }
+        // this.tokens = new ArrayList<ArrayList <Integer>>(env.config.players);
         this.slotLocks = new Object[12];
         for(int i= 0; i<slotLocks.length; i++){
             slotLocks[i] = new Object(); 
@@ -117,14 +130,23 @@ public class Table {
             Thread.sleep(env.config.tableDelayMillis);
         } catch (InterruptedException ignored) {}
 
+        //remove tokens from the card
+        for (int i =0 ; i<numOfPlayers ; i++){
+            removeToken(i,slot);
+        }
+
+        //update the grid
         cardToSlot[slotToCard[slot]]= null;
         slotToCard[slot]=null;
         env.ui.removeCard(slot);
 
-        for (int i =0 ; i<tokens.size() ; i++){
-            if(tokens.get(i).contains(slot))
-                removeToken(i, slot);
-        }
+
+
+
+        // for (int i =0 ; i<numOfPlayers ; i++){
+        //     if(tokens.get(i).contains(slot))
+        //         removeToken(i, slot);
+        // }
         
 
     }
@@ -137,7 +159,9 @@ public class Table {
     public void placeToken(int player, int slot) {
         // while (tokens.size()<player){
             System.out.println("im in place token");
-            tokens.get(player).add(slot);
+            tokens[player][slot] = true;
+
+            // tokens.get(player).add(slot);
             env.ui.placeToken(player, slot);
         // }
            
@@ -150,20 +174,40 @@ public class Table {
      * @return       - true iff a token was successfully removed.
      */
     public boolean removeToken(int player, int slot) {
-        if (player<=tokens.size()){
-            env.ui.removeToken(player, slot);
-            for(Integer i: tokens.get(player)){
-                if (i.equals(slot)){
-                    tokens.get(player).remove(slot);
-                }
-            }
 
-            return true;
+        boolean removed = false;
+
+         if (tokens[player][slot] == true){
+            tokens[player][slot] = false;
+            removed = true;
+            System.out.println("removed the token");
+         }
+         env.ui.removeToken(player, slot);
+         System.out.println("not in ui");
+         return removed;
         }
-        return false;
-    }
 
-    public ArrayList <ArrayList<Integer>> getTokens(){
+
+
+    //     for (int i =0 ; i < numOfPlayers; i++){
+    //         tokens[slot][i] = false;
+    //     }
+
+        
+       
+
+
+    //         // for(Integer i: tokens.get(player)){
+    //         //     if (i.equals(slot)){
+    //         //         tokens.get(player).remove(slot);
+    //         //     }
+
+    //         return true;
+    //     }
+    //     return false;
+    // }
+
+    public boolean[][] getTokens(){
         return tokens;
     }
 
