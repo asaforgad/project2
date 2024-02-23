@@ -37,6 +37,8 @@ public class Table {
 
     protected int numOfPlayers;
 
+    boolean tableIsReady = false;
+
 
 
     /**
@@ -49,12 +51,13 @@ public class Table {
     public Table(Env env, Integer[] slotToCard, Integer[] cardToSlot) {
 
         this.env = env;
+        this.tableIsReady = false;
         this.slotToCard = slotToCard;
         this.cardToSlot = cardToSlot;
         numOfPlayers = env.config.players;
-        this.tokens = new boolean[env.config.players][12];
+        this.tokens = new boolean[env.config.players][env.config.tableSize];
         for(int i = 0; i< env.config.players; i++){
-            for(int j = 0; j< 12; j++){
+            for(int j = 0; j < env.config.tableSize ; j++){
                 this.tokens[i][j] = false;
             }
         }
@@ -170,6 +173,10 @@ public class Table {
 
     public boolean[][] getTokens(){
         return tokens;
+    }
+
+    public void tableIsReady (boolean Isready){
+        tableIsReady=Isready;
     }
 
 }

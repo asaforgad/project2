@@ -3,6 +3,8 @@ package bguspl.set.ex;
 import bguspl.set.Env;
 
 import java.util.ArrayList;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 
 /**
  * This class manages the players' threads and data
@@ -55,11 +57,11 @@ public class Player implements Runnable {
      */
     private int score;
 
-    private ArrayList <Integer> queue;
+    private ArrayBlockingQueue <Integer> queue;
 
-    public ArrayList <Integer> myTokens; 
+    public ArrayBlockingQueue <Integer> myTokens; 
 
-    public boolean checked;
+    public volatile boolean checked;
 
 
     
@@ -79,10 +81,10 @@ public class Player implements Runnable {
         this.id = id;
         this.human = human;
         this.dealer = dealer;
-        this.queue = new ArrayList<Integer>(3);
+        this.queue =  new ArrayBlockingQueue<Integer>(env.config.featureSize);
         terminate = false;
         checked = false;
-        myTokens = new ArrayList<Integer>(3);
+        myTokens = new ArrayBlockingQueue<Integer>(4);
     }
 
     /**
@@ -96,22 +98,21 @@ public class Player implements Runnable {
 
         try { while (!terminate) {
             while (!queue.isEmpty()){
-                System.out.println("not empty");
-                int currentToken =queue.remove(0);
-                System.out.println("removed from queue");
+                // System.out.println("not empty");
+                int currentToken =queue.take();
+                // System.out.println("removed from queue");
 
                 if(table.tokens[this.id][currentToken]==true){
                     table.removeToken(id,currentToken); 
                     myTokens.remove(currentToken);
-                    System.out.println("removed");
+                    // System.out.println("removed");
                 }
                 else{
-                    System.out.println("hello");
                     table.placeToken(id, currentToken); 
                     myTokens.add(currentToken);
                     if (myTokens.size()==3)
                         checkDealer();
-                    System.out.println("put  on table");
+                    // System.out.println("put on table");
                 }
 
             }
@@ -128,9 +129,11 @@ public class Player implements Runnable {
 
     private void checkDealer() throws InterruptedException{ 
 
-        synchronized(dealer.waitingForCheck){
-            dealer.waitingForCheck.add(myTokens);
-            dealer.waitingForCheck.notifyAll();
+        synchronized(dealer){
+            addIdToFirstSpot();
+            dealer.waitingForCheck.offer(myTokens);
+            dealer.notifyAll();
+            dealer.checkSets();
         }
 
         synchronized(this){
@@ -150,8 +153,9 @@ public class Player implements Runnable {
             env.logger.info("thread " + Thread.currentThread().getName() + " starting.");
             while (!terminate) {
                 int random = (int) (Math.random() * env.config.tableSize);
-                keyPressed(random);
+
                 try {
+                    keyPressed(random);
                     synchronized (this) { wait(); }
                 } catch (InterruptedException ignored) {}
             }
@@ -163,7 +167,7 @@ public class Player implements Runnable {
     /**
      * Called when the game should be terminated.
      */
-    public void terminate() {
+    public synchronized void terminate() {
         terminate = true;
         playerThread.interrupt();
     }
@@ -173,12 +177,13 @@ public class Player implements Runnable {
      * This method is called when a key is pressed.
      *
      * @param slot - the slot corresponding to the key pressed.
+     * @throws InterruptedException 
      */
     public void keyPressed(int slot) {
             
-            if(queue.size()<=3 & this.table.slotToCard[slot] != null){
-                System.out.println(slot);
-                    queue.add(slot);          
+            if(queue.size()<=3 && table.tableIsReady){
+                System.out.println("the number "+ slot+ " slot was pressed");
+                    queue.offer(slot);          
     }
 }
 
@@ -240,8 +245,18 @@ loops--;
     public int score() {
         return score;
     }
+    void addIdToFirstSpot(){
+        Integer f = myTokens.poll();
+        Integer s = myTokens.poll();
+        Integer t = myTokens.poll();
+        myTokens.offer(id);
+        myTokens.offer(f);
+        myTokens.offer(s);
+        myTokens.offer(t);
+    }
 
-    public ArrayList <Integer> getQueue(){
+
+    public BlockingQueue <Integer> getQueue(){
         return this.queue;
     }
 
