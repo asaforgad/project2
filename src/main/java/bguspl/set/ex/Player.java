@@ -59,7 +59,7 @@ public class Player implements Runnable {
 
     private ArrayBlockingQueue <Integer> queue;
 
-    public ArrayBlockingQueue <Integer> myTokens; 
+    public ArrayList <Integer> myTokens; 
 
     public volatile boolean checked;
 
@@ -84,7 +84,7 @@ public class Player implements Runnable {
         this.queue =  new ArrayBlockingQueue<Integer>(env.config.featureSize);
         terminate = false;
         checked = false;
-        myTokens = new ArrayBlockingQueue<Integer>(4);
+        myTokens = new ArrayList<Integer>(3);
     }
 
     /**
@@ -130,8 +130,7 @@ public class Player implements Runnable {
     private void checkDealer() throws InterruptedException{ 
 
         synchronized(dealer){
-            addIdToFirstSpot();
-            dealer.waitingForCheck.offer(myTokens);
+            dealer.waitingForCheck.add(this.id);
             dealer.notifyAll();
             dealer.checkSets();
         }
@@ -245,16 +244,6 @@ loops--;
     public int score() {
         return score;
     }
-    void addIdToFirstSpot(){
-        Integer f = myTokens.poll();
-        Integer s = myTokens.poll();
-        Integer t = myTokens.poll();
-        myTokens.offer(id);
-        myTokens.offer(f);
-        myTokens.offer(s);
-        myTokens.offer(t);
-    }
-
 
     public BlockingQueue <Integer> getQueue(){
         return this.queue;
