@@ -244,11 +244,14 @@ public class Dealer implements Runnable {
             Player claimer = findPlayer(claimerId);
 
             if(setExist){
+                printSet(firstSet);
+                System.out.println("this is a set");
                 tokensToRemove = firstSet;
                 claimer.point(); 
+                removeSetsContainSameValue(firstSet);
                 removeCardsFromTable();
                 placeCardsOnTable();
-                removeSetsContainSameValue(firstSet);
+                
             }
             else{
                 claimer.penalty();                
@@ -261,18 +264,17 @@ public class Dealer implements Runnable {
     } 
 
     public void removeSetsContainSameValue(ArrayBlockingQueue<Integer> firstSet){
-              int third = firstSet.poll();
+            int third = firstSet.poll();
             int second = firstSet.poll();
             int first = firstSet.poll();
         
         for (ArrayBlockingQueue<Integer> certainSet : waitingForCheck){
-
-
             if (certainSet.contains(third)||
             certainSet.contains(second)||
-            certainSet.contains(first))
-            {
+            certainSet.contains(first)){
+                printSet(certainSet);
                 waitingForCheck.remove(certainSet);
+                System.out.println("removed");
                 continue;
             }
         }
@@ -326,6 +328,20 @@ public class Dealer implements Runnable {
         while(!tokensToRemove.isEmpty()){
             tokensToRemove.poll();
         }
+
+    }
+
+    public void printSet(ArrayBlockingQueue<Integer> mySet){
+
+        System.out.println("your set:");
+        System.out.println(mySet.poll());
+        System.out.println(mySet.poll());
+        System.out.println(mySet.poll());
+        System.out.println("that was your set!");
+
+
+
+
 
     }
 
