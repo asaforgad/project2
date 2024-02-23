@@ -84,7 +84,7 @@ public class Player implements Runnable {
         this.queue =  new ArrayBlockingQueue<Integer>(env.config.featureSize);
         terminate = false;
         checked = false;
-        myTokens = new ArrayBlockingQueue<Integer>(4);
+        myTokens = new ArrayBlockingQueue<Integer>(3);
     }
 
     /**
@@ -199,23 +199,23 @@ public class Player implements Runnable {
         int ignored = table.countCards(); // this part is just for demonstration in the unit tests  
         myTokens.clear();
         env.ui.setScore(id, ++score);
+        long time = this.env.config.pointFreezeMillis;
+        int loops = (int) this.env.config.pointFreezeMillis / 1000;
+        int div = loops;
+        while (loops >= 0) {
+            this.env.ui.setFreeze(id, time);//turn the color of the player to red
+            if (loops != 0) {
+                try {
+                
+                    Thread.sleep(this.env.config.pointFreezeMillis / div);//put the player thread to sleep for 1 sec
+                } catch (InterruptedException e) {}
+            }
+            time = time - 1000;
+            loops--;
+        }
 
-        long timeLeft= env.config.pointFreezeMillis;
-        int loops = (int)timeLeft/1000;
-        int constLoops = loops;
+    }
 
-        while(loops>0){
-            env.ui.setFreeze(id, timeLeft);
-            if(loops!=0){
-        try {
-            // Sleep for the fixed amount of time
-            Thread.sleep(env.config.pointFreezeMillis/constLoops);
-        } catch (InterruptedException e) {
-         }
-      }
-        loops--;
-    }
-    }
 
 
     /**
@@ -224,21 +224,20 @@ public class Player implements Runnable {
     public void penalty() {
         int ignored = table.countCards(); // this part is just for demonstration in the unit tests
 
-        long timeLeft= env.config.penaltyFreezeMillis;
-        int loops = (int)timeLeft/1000;
-        int constLoops = loops;
-
-        while(loops>0){
-            env.ui.setFreeze(id, timeLeft);
-            if(loops!=0){
-        try {
-            // Sleep for the fixed amount of time
-            Thread.sleep(env.config.penaltyFreezeMillis/constLoops);
-        } catch (InterruptedException e) {
-        }
-    }
-loops--;
-    }
+            long time = this.env.config.penaltyFreezeMillis;
+      
+            int loops = (int) this.env.config.penaltyFreezeMillis / 1000;
+            int div = loops;
+            while (loops >= 0) {
+                this.env.ui.setFreeze(id, time);//turn the color of the player to red
+                if (loops != 0) {
+                    try {
+                        Thread.sleep(this.env.config.penaltyFreezeMillis / div);//put the player thread to sleep for 1 sec
+                    } catch (InterruptedException e) {}
+                }
+                time = time - 1000;
+                loops--;
+              }
     }
     
 
