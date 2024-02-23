@@ -204,7 +204,7 @@ public class Player implements Runnable {
         int div = loops;
         while (loops >= 0) {
             this.env.ui.setFreeze(id, time);//turn the color of the player to red
-            if (loops != 0) {
+            if (loops > 0) {
                 try {
                 
                     Thread.sleep(this.env.config.pointFreezeMillis / div);//put the player thread to sleep for 1 sec
@@ -230,7 +230,7 @@ public class Player implements Runnable {
             int div = loops;
             while (loops >= 0) {
                 this.env.ui.setFreeze(id, time);//turn the color of the player to red
-                if (loops != 0) {
+                if (loops > 0) {
                     try {
                         Thread.sleep(this.env.config.penaltyFreezeMillis / div);//put the player thread to sleep for 1 sec
                     } catch (InterruptedException e) {}
