@@ -180,7 +180,7 @@ public class Player implements Runnable {
      */
     public void keyPressed(int slot) {
             
-            if(queue.size()<=3 && table.tableIsReady){
+            if(queue.size()<=3 && myTokens.size() <=3 && table.tableIsReady){
                 System.out.println("the number "+ slot+ " slot was pressed");
                     queue.offer(slot);          
     }
