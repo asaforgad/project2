@@ -91,8 +91,8 @@ public class Dealer implements Runnable {
             updateTimerDisplay(false);
             sleepUntilWokenOrTimeout();
             updateTimerDisplay(false);
-            removeCardsFromTable();
-            placeCardsOnTable();
+            // removeCardsFromTable();
+            // placeCardsOnTable();
         }
     }
 
@@ -100,8 +100,12 @@ public class Dealer implements Runnable {
      * Called when the game should be terminated.
      */
     public void terminate() {
-        for (Player player : players){
-            player.terminate();
+        System.out.println("TERMINATE");
+        players[0].terminate();
+        for (int i =1;i<players.length;i++){
+            while (players[i-1].getTerminate()==false){
+            }
+            players[i].terminate();
         }
         terminate = true;
     }
@@ -112,7 +116,7 @@ public class Dealer implements Runnable {
      * @return true iff the game should be finished.
      */
     private boolean shouldFinish() {
-        return terminate || (env.util.findSets(deck, 1).size() == 0);
+        return (terminate || (env.util.findSets(deck, 1).size() == 0) );
     }
 
     /**
@@ -126,15 +130,12 @@ public class Dealer implements Runnable {
         
             while(!tokensToRemove.isEmpty()){
                 Integer slot = tokensToRemove.remove(0);
-                System.out.println("tokens to remove is ok");
 
                 for (Player p : players){
                         p.getQueue().remove(slot);
-                        System.out.println("queue is ok");
 
                         if (table.tokens[p.id][slot] == true)
                             p.myTokens.remove(slot);
-                            System.out.println("my tokens is ok");
                     }
 
                  table.removeCard(slot); 
@@ -161,6 +162,7 @@ public class Dealer implements Runnable {
             }
 
             table.tableIsReady(true);
+
         }
     }
 
@@ -186,15 +188,15 @@ public class Dealer implements Runnable {
      */
     private void updateTimerDisplay(boolean reset) {
 
-
-
-        if(env.config.turnTimeoutMillis == 0){
+        if(env.config.turnTimeoutMillis < 0)
+            return;
+        else if(env.config.turnTimeoutMillis == 0){
             long elapsedTime = System.currentTimeMillis() - lastReset;
             env.ui.setElapsed(elapsedTime);
         }
         else{
             if(!reset){
-                long elapsedTime = System.currentTimeMillis() - lastReset;
+                // long elapsedTime = System.currentTimeMillis() - lastReset;
                 boolean warn = false;
                 if(reshuffleTime-System.currentTimeMillis() < env.config.turnTimeoutWarningMillis){
                     warn = true;
@@ -214,9 +216,8 @@ public class Dealer implements Runnable {
      */
     private void removeAllCardsFromTable() {
         synchronized(table){
-        checkSets();
         table.tableIsReady(false);
-        for(int i = 0 ; i< env.config.tableSize; i++){
+        for(int i = 0 ; i< env.config.tableSize && table.slotToCard[i]!=null; i++){
             deck.add(table.slotToCard[i]);
             table.removeCard(i);
             }
@@ -226,6 +227,7 @@ public class Dealer implements Runnable {
                 p.myTokens.clear();
                 p.getQueue().clear();
             }
+            waitingForCheck.clear();
         }
     }
 
@@ -233,7 +235,6 @@ public class Dealer implements Runnable {
      * Check who is/are the winner/s and displays them.
      */
     private void announceWinners() {
-        ArrayList <Integer> winners = new ArrayList<>(players.length);
         int maxScore = 0;
         for(int i=0; i<players.length; i++){
             if(players[i].score() >= maxScore){
@@ -253,7 +254,6 @@ public class Dealer implements Runnable {
         return players[i];
     }
     public boolean checkSets(){
-        System.out.println("checking your set");
 
         boolean setExist = false;
 
@@ -263,12 +263,11 @@ public class Dealer implements Runnable {
 
             int claimerId = waitingForCheck.poll();
             ArrayList<Integer> firstSet = new ArrayList<Integer> (players[claimerId].myTokens);
-
+            if (firstSet.size()==3){
             setExist = isSet(firstSet);
             Player claimer = findPlayer(claimerId);
 
             if(setExist){
-                System.out.println("this is a set");
                 tokensToRemove = firstSet;
                 removeSetsContainSameValue(firstSet);
                 claimer.state=1;
@@ -282,7 +281,8 @@ public class Dealer implements Runnable {
             
             claimer.checked = true;
             this.notifyAll();
-            }
+            }}
+            
         }
         return setExist;
     } 
@@ -296,10 +296,8 @@ public class Dealer implements Runnable {
             if (players[Id].myTokens.contains(third)||
             players[Id].myTokens.contains(second)||
             players[Id].myTokens.contains(first)){
-                printSet(players[Id].myTokens);
                 waitingForCheck.remove(Id);
                 players[Id].checked = true;
-                System.out.println("removed");
                 continue;
             }
         }
@@ -307,16 +305,16 @@ public class Dealer implements Runnable {
 
 
     public boolean isSet(ArrayList<Integer> mySet){
-
+        if (!terminate){
+            synchronized(table){
         int [] cardToCheck= new int[3];
-        cardToCheck[0] = table.slotToCard[mySet.get(0)];
-        System.out.println(cardToCheck[0]);
-        cardToCheck[1] = table.slotToCard[mySet.get(1)];
-        System.out.println(cardToCheck[1]);
-        cardToCheck[2] = table.slotToCard[mySet.get(2)];
-        System.out.println(cardToCheck[2]);
 
-        return env.util.testSet(cardToCheck);
+        cardToCheck[0] = table.slotToCard[mySet.get(0)];
+        cardToCheck[1] = table.slotToCard[mySet.get(1)];
+        cardToCheck[2] = table.slotToCard[mySet.get(2)];
+
+        return env.util.testSet(cardToCheck);}
+        }return false;
     }
 
 
