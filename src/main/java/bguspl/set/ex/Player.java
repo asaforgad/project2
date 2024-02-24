@@ -210,7 +210,7 @@ public class Player implements Runnable {
         System.out.println("point");
         
         int ignored = table.countCards(); // this part is just for demonstration in the unit tests  
-        myToken`s.clear();
+        myTokens.clear();
         env.ui.setScore(id, ++score);
 
         long sleepTime = env.config.pointFreezeMillis;
