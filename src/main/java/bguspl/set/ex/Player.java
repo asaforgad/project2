@@ -81,7 +81,7 @@ public class Player implements Runnable {
         this.id = id;
         this.human = human;
         this.dealer = dealer;
-        this.queue =  new ArrayBlockingQueue<Integer>(env.config.featureSize);
+        this.queue =  new ArrayBlockingQueue<Integer>(3);
         terminate = false;
         checked = false;
         myTokens = new ArrayList<Integer>(3);
@@ -98,18 +98,20 @@ public class Player implements Runnable {
 
         try { while (!terminate) {
             while (!queue.isEmpty()){
-                // System.out.println("not empty");
-                int currentToken =queue.take();
-                // System.out.println("removed from queue");
+                System.out.println("not empty");
+                Integer currentToken =queue.take();
+                System.out.println("queue take");
 
                 if(table.tokens[this.id][currentToken]==true){
                     table.removeToken(id,currentToken); 
                     myTokens.remove(currentToken);
-                    System.out.println("removed");
+                    System.out.println("My token.removed");
+                    System.out.println("my tokens size: " +myTokens.size() );
                 }
-                else{
+                else if (myTokens.size() < 3){   
                     table.placeToken(id, currentToken); 
                     myTokens.add(currentToken);
+                    System.out.println("my tokens size: " +myTokens.size() );
                     if (myTokens.size()==3)
                         checkDealer();
                     // System.out.println("put on table");
@@ -133,11 +135,10 @@ public class Player implements Runnable {
             
             dealer.waitingForCheck.add(this.id);
             
-        dealer.notifyAll();
+        // dealer.notifyAll();
             dealer.checkSets();
             
         }
-
 
         synchronized(this){
             while(!checked){
@@ -182,9 +183,9 @@ public class Player implements Runnable {
      * @param slot - the slot corresponding to the key pressed.
      * @throws InterruptedException 
      */
-    public void keyPressed(int slot) {
+    public synchronized void keyPressed(int slot) {
             
-            if(queue.size()<=3 && myTokens.size() <=3 && table.tableIsReady){
+            if(queue.size()<=3 && table.tableIsReady){
                 System.out.println("the number "+ slot+ " slot was pressed");
                     queue.offer(slot);          
     }
@@ -197,53 +198,70 @@ public class Player implements Runnable {
      * @post - the player's score is updated in the ui.
      * remember to sleep the thread
      */
-    public void point() {
+    public synchronized void point() {
+
+        System.out.println("point");
         
         int ignored = table.countCards(); // this part is just for demonstration in the unit tests  
         myTokens.clear();
         env.ui.setScore(id, ++score);
 
-        long timeLeft= env.config.pointFreezeMillis;
-        int loops = (int)timeLeft/1000;
-        int constLoops = loops;
+        long sleepTime = env.config.penaltyFreezeMillis;
+        while(sleepTime > 0){
+            env.ui.setFreeze(id, sleepTime);
+        try{playerThread.sleep(1000);} catch(InterruptedException e){}
+        sleepTime = sleepTime -1000;}
+        env.ui.setFreeze(id, 0);
 
-        while(loops>0){
-            env.ui.setFreeze(id, timeLeft);
-            if(loops!=0){
-        try {
-            // Sleep for the fixed amount of time
-            Thread.sleep(env.config.pointFreezeMillis/constLoops);
-        } catch (InterruptedException e) {
-         }
-      }
-    timeLeft= timeLeft-1000;
-    loops--;
-    }
+        // long timeLeft= env.config.pointFreezeMillis;
+        // int loops = (int)timeLeft/1000;
+        // int constLoops = loops;
+
+        // while(loops>0){
+        //     env.ui.setFreeze(id, timeLeft);
+        //     if(loops!=0){
+        // try {
+        //     // Sleep for the fixed amount of time
+        //     Thread.sleep(env.config.pointFreezeMillis/constLoops);
+        // } catch (InterruptedException e) {
+        //  }
+    //   }
+    // timeLeft= timeLeft-1000;
+    // loops--;
+    // }
     }
 
 
     /**
      * Penalize a player and perform other related actions.
      */
-    public void penalty() {
-        int ignored = table.countCards(); // this part is just for demonstration in the unit tests
+    public synchronized void penalty() {
+        System.out.println("penalty");
+        // int ignored = table.countCards(); // this part is just for demonstration in the unit tests
+        long sleepTime = env.config.penaltyFreezeMillis;
+        while(sleepTime > 0){
+            env.ui.setFreeze(id, sleepTime);
+        try{playerThread.sleep(1000);} catch(InterruptedException e){}
+        sleepTime = sleepTime -1000;}
+        env.ui.setFreeze(id, 0);
+        
 
-        long timeLeft= env.config.penaltyFreezeMillis;
-        int loops = (int)timeLeft/1000;
-        int constLoops = loops;
+    //     long timeLeft= env.config.penaltyFreezeMillis;
+    //     int loops = (int)timeLeft/1000;
+    //     int constLoops = loops;
 
-        while(loops>0){
-            env.ui.setFreeze(id, timeLeft);
-            if(loops!=0){
-            try {
-                // Sleep for the fixed amount of time
-                Thread.sleep(env.config.penaltyFreezeMillis/constLoops);
-            } catch (InterruptedException e) {
-            }
-    }
-    timeLeft= timeLeft-1000;
-    loops--;
-    }
+    //     while(loops>0){
+    //         env.ui.setFreeze(id, timeLeft);
+    //         if(loops!=0){
+    //         try {
+    //             // Sleep for the fixed amount of time
+    //             Thread.sleep(env.config.penaltyFreezeMillis/constLoops);
+    //         } catch (InterruptedException e) {
+    //         }
+    // }
+    // timeLeft= timeLeft-1000;
+    // loops--;
+    // }
 
     }
     

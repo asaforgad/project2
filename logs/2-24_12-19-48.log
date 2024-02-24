@@ -1,0 +1,161 @@
+[12:19:48.352] [INFO   ] thread bguspl.set.Main.main() starting.
+[12:19:48.352] [SEVERE ] cannot read configuration file config.properties trying from resources.
+[12:19:48.352] [SEVERE ] configuration file was loaded from resources directory.
+[12:19:48.922] [INFO   ] thread dealer starting.
+[12:19:48.925] [INFO   ] thread dealer starting.
+[12:19:48.927] [INFO   ] thread Player0 starting.
+[12:19:48.933] [INFO   ] thread Player1 starting.
+[12:19:49.053] [SEVERE ] placing card 79 in slot 0
+[12:19:49.162] [SEVERE ] placing card 62 in slot 1
+[12:19:49.273] [SEVERE ] placing card 41 in slot 2
+[12:19:49.378] [SEVERE ] placing card 1 in slot 3
+[12:19:49.490] [SEVERE ] placing card 45 in slot 4
+[12:19:49.594] [SEVERE ] placing card 71 in slot 5
+[12:19:49.709] [SEVERE ] placing card 67 in slot 6
+[12:19:49.821] [SEVERE ] placing card 10 in slot 7
+[12:19:49.932] [SEVERE ] placing card 43 in slot 8
+[12:19:50.042] [SEVERE ] placing card 9 in slot 9
+[12:19:50.152] [SEVERE ] placing card 25 in slot 10
+[12:19:50.262] [SEVERE ] placing card 6 in slot 11
+[12:19:50.964] [SEVERE ] updating countdown to 57957
+[12:19:51.665] [SEVERE ] updating countdown to 57256
+[12:19:52.368] [SEVERE ] updating countdown to 56553
+[12:19:53.075] [SEVERE ] updating countdown to 55846
+[12:19:53.784] [SEVERE ] updating countdown to 55137
+[12:19:54.492] [SEVERE ] updating countdown to 54429
+[12:19:55.199] [SEVERE ] updating countdown to 53722
+[12:19:55.908] [SEVERE ] updating countdown to 53013
+[12:19:56.615] [SEVERE ] updating countdown to 52306
+[12:19:57.323] [SEVERE ] updating countdown to 51598
+[12:19:58.029] [SEVERE ] updating countdown to 50892
+[12:19:58.736] [SEVERE ] updating countdown to 50185
+[12:19:59.444] [SEVERE ] updating countdown to 49477
+[12:20:00.150] [SEVERE ] updating countdown to 48771
+[12:20:00.858] [SEVERE ] updating countdown to 48063
+[12:20:01.568] [SEVERE ] updating countdown to 47353
+[12:20:02.276] [SEVERE ] updating countdown to 46645
+[12:20:02.985] [SEVERE ] updating countdown to 45936
+[12:20:03.693] [SEVERE ] updating countdown to 45228
+[12:20:04.402] [SEVERE ] updating countdown to 44519
+[12:20:05.109] [SEVERE ] updating countdown to 43812
+[12:20:05.817] [SEVERE ] updating countdown to 43104
+[12:20:06.527] [SEVERE ] updating countdown to 42394
+[12:20:07.234] [SEVERE ] updating countdown to 41687
+[12:20:07.941] [SEVERE ] updating countdown to 40980
+[12:20:08.649] [SEVERE ] updating countdown to 40272
+[12:20:09.356] [SEVERE ] updating countdown to 39565
+[12:20:10.063] [SEVERE ] updating countdown to 38858
+[12:20:10.772] [SEVERE ] updating countdown to 38149
+[12:20:11.480] [SEVERE ] updating countdown to 37441
+[12:20:12.186] [SEVERE ] updating countdown to 36735
+[12:20:12.893] [SEVERE ] updating countdown to 36028
+[12:20:13.601] [SEVERE ] updating countdown to 35320
+[12:20:14.309] [SEVERE ] updating countdown to 34612
+[12:20:15.018] [SEVERE ] updating countdown to 33903
+[12:20:15.726] [SEVERE ] updating countdown to 33195
+[12:20:16.434] [SEVERE ] updating countdown to 32487
+[12:20:17.143] [SEVERE ] updating countdown to 31778
+[12:20:17.855] [SEVERE ] updating countdown to 31066
+[12:20:18.564] [SEVERE ] updating countdown to 30357
+[12:20:19.273] [SEVERE ] updating countdown to 29648
+[12:20:19.979] [SEVERE ] updating countdown to 28942
+[12:20:20.687] [SEVERE ] updating countdown to 28234
+[12:20:21.395] [SEVERE ] updating countdown to 27526
+[12:20:22.103] [SEVERE ] updating countdown to 26818
+[12:20:22.812] [SEVERE ] updating countdown to 26109
+[12:20:23.520] [SEVERE ] updating countdown to 25401
+[12:20:24.229] [SEVERE ] updating countdown to 24692
+[12:20:24.936] [SEVERE ] updating countdown to 23985
+[12:20:25.642] [SEVERE ] updating countdown to 23279
+[12:20:26.350] [SEVERE ] updating countdown to 22571
+[12:20:27.058] [SEVERE ] updating countdown to 21863
+[12:20:27.766] [SEVERE ] updating countdown to 21155
+[12:20:28.477] [SEVERE ] updating countdown to 20444
+[12:20:29.184] [SEVERE ] updating countdown to 19737
+[12:20:29.891] [SEVERE ] updating countdown to 19030
+[12:20:30.598] [SEVERE ] updating countdown to 18323
+[12:20:31.306] [SEVERE ] updating countdown to 17615
+[12:20:32.016] [SEVERE ] updating countdown to 16905
+[12:20:32.724] [SEVERE ] updating countdown to 16197
+[12:20:33.430] [SEVERE ] updating countdown to 15491
+[12:20:34.139] [SEVERE ] updating countdown to 14782
+[12:20:34.849] [SEVERE ] updating countdown to 14072
+[12:20:35.558] [SEVERE ] updating countdown to 13363
+[12:20:36.273] [SEVERE ] updating countdown to 12648
+[12:20:36.987] [SEVERE ] updating countdown to 11934
+[12:20:37.698] [SEVERE ] updating countdown to 11223
+[12:20:38.399] [SEVERE ] updating countdown to 10522
+[12:20:39.113] [SEVERE ] updating countdown to 9808
+[12:20:39.826] [SEVERE ] updating countdown to 9095
+[12:20:40.526] [SEVERE ] updating countdown to 8395
+[12:20:41.236] [SEVERE ] updating countdown to 7685
+[12:20:41.952] [SEVERE ] updating countdown to 6969
+[12:20:42.666] [SEVERE ] updating countdown to 6255
+[12:20:43.380] [SEVERE ] updating countdown to 5541
+[12:20:49.199] [SEVERE ] removing card from slot 0
+[12:20:49.310] [SEVERE ] removing card from slot 1
+[12:20:49.421] [SEVERE ] removing card from slot 2
+[12:20:49.532] [SEVERE ] removing card from slot 3
+[12:20:49.643] [SEVERE ] removing card from slot 4
+[12:20:49.755] [SEVERE ] removing card from slot 5
+[12:20:49.865] [SEVERE ] removing card from slot 6
+[12:20:49.976] [SEVERE ] removing card from slot 7
+[12:20:50.088] [SEVERE ] removing card from slot 8
+[12:20:50.200] [SEVERE ] removing card from slot 9
+[12:20:50.311] [SEVERE ] removing card from slot 10
+[12:20:50.422] [SEVERE ] removing card from slot 11
+[12:20:50.534] [SEVERE ] placing card 5 in slot 0
+[12:20:50.645] [SEVERE ] placing card 35 in slot 1
+[12:20:50.757] [SEVERE ] placing card 48 in slot 2
+[12:20:50.868] [SEVERE ] placing card 1 in slot 3
+[12:20:50.980] [SEVERE ] placing card 31 in slot 4
+[12:20:51.091] [SEVERE ] placing card 15 in slot 5
+[12:20:51.203] [SEVERE ] placing card 51 in slot 6
+[12:20:51.314] [SEVERE ] placing card 11 in slot 7
+[12:20:51.426] [SEVERE ] placing card 12 in slot 8
+[12:20:51.537] [SEVERE ] placing card 43 in slot 9
+[12:20:51.648] [SEVERE ] placing card 62 in slot 10
+[12:20:51.759] [SEVERE ] placing card 67 in slot 11
+[12:20:51.871] [SEVERE ] removing card from slot 0
+[12:20:51.982] [SEVERE ] removing card from slot 1
+[12:20:52.094] [SEVERE ] removing card from slot 2
+[12:20:52.203] [SEVERE ] removing card from slot 3
+[12:20:52.313] [SEVERE ] removing card from slot 4
+[12:20:52.422] [SEVERE ] removing card from slot 5
+[12:20:52.530] [SEVERE ] removing card from slot 6
+[12:20:52.640] [SEVERE ] removing card from slot 7
+[12:20:52.753] [SEVERE ] removing card from slot 8
+[12:20:52.863] [SEVERE ] removing card from slot 9
+[12:20:52.974] [SEVERE ] removing card from slot 10
+[12:20:53.086] [SEVERE ] removing card from slot 11
+[12:20:53.196] [SEVERE ] placing card 55 in slot 0
+[12:20:53.305] [SEVERE ] placing card 31 in slot 1
+[12:20:53.414] [SEVERE ] placing card 60 in slot 2
+[12:20:53.441] [SEVERE ] exit button pressed
+[12:20:53.441] [INFO   ] thread Player0 terminated.
+[12:20:53.441] [INFO   ] thread Player1 terminated.
+[12:20:53.524] [SEVERE ] placing card 65 in slot 3
+[12:20:53.635] [SEVERE ] placing card 35 in slot 4
+[12:20:53.742] [SEVERE ] placing card 41 in slot 5
+[12:20:53.852] [SEVERE ] placing card 56 in slot 6
+[12:20:53.961] [SEVERE ] placing card 59 in slot 7
+[12:20:54.070] [SEVERE ] placing card 29 in slot 8
+[12:20:54.180] [SEVERE ] placing card 5 in slot 9
+[12:20:54.288] [SEVERE ] placing card 47 in slot 10
+[12:20:54.397] [SEVERE ] placing card 45 in slot 11
+[12:20:54.506] [SEVERE ] removing card from slot 0
+[12:20:54.615] [SEVERE ] removing card from slot 1
+[12:20:54.724] [SEVERE ] removing card from slot 2
+[12:20:54.833] [SEVERE ] removing card from slot 3
+[12:20:54.942] [SEVERE ] removing card from slot 4
+[12:20:55.051] [SEVERE ] removing card from slot 5
+[12:20:55.161] [SEVERE ] removing card from slot 6
+[12:20:55.269] [SEVERE ] removing card from slot 7
+[12:20:55.379] [SEVERE ] removing card from slot 8
+[12:20:55.487] [SEVERE ] removing card from slot 9
+[12:20:55.596] [SEVERE ] removing card from slot 10
+[12:20:55.706] [SEVERE ] removing card from slot 11
+[12:20:55.708] [INFO   ] thread dealer terminated.
+[12:20:55.708] [INFO   ] thread dealer terminated.
+[12:20:55.709] [SEVERE ] thanks for playing... it was fun!
+[12:20:55.710] [INFO   ] thread bguspl.set.Main.main() terminated.

@@ -165,7 +165,7 @@ public class Table {
          if (tokens[player][slot] == true){
             tokens[player][slot] = false;
             removed = true;
-            System.out.println("removed the token"); 
+            System.out.println(" table removed the token"); 
          env.ui.removeToken(player, slot);
          }
          return removed;

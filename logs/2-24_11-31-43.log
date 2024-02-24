@@ -1,0 +1,30 @@
+[11:31:43.036] [INFO   ] thread bguspl.set.Main.main() starting.
+[11:31:43.039] [SEVERE ] cannot read configuration file config.properties trying from resources.
+[11:31:43.040] [SEVERE ] configuration file was loaded from resources directory.
+[11:31:43.529] [INFO   ] thread dealer starting.
+[11:31:43.531] [INFO   ] thread dealer starting.
+[11:31:43.534] [INFO   ] thread Player0 starting.
+[11:31:43.539] [INFO   ] thread Player1 starting.
+[11:31:43.658] [SEVERE ] placing card 1 in slot 0
+[11:31:43.769] [SEVERE ] placing card 80 in slot 1
+[11:31:43.879] [SEVERE ] placing card 53 in slot 2
+[11:31:43.989] [SEVERE ] placing card 29 in slot 3
+[11:31:44.099] [SEVERE ] placing card 31 in slot 4
+[11:31:44.210] [SEVERE ] placing card 6 in slot 5
+[11:31:44.319] [SEVERE ] placing card 61 in slot 6
+[11:31:44.430] [SEVERE ] placing card 65 in slot 7
+[11:31:44.541] [SEVERE ] placing card 57 in slot 8
+[11:31:44.651] [SEVERE ] placing card 35 in slot 9
+[11:31:44.762] [SEVERE ] placing card 69 in slot 10
+[11:31:44.874] [SEVERE ] placing card 58 in slot 11
+[11:31:45.587] [SEVERE ] updating countdown to 57941
+[11:31:46.297] [SEVERE ] updating countdown to 57231
+[11:31:47.009] [SEVERE ] updating countdown to 56519
+[11:31:47.634] [SEVERE ] exit button pressed
+[11:31:47.635] [INFO   ] thread Player0 terminated.
+[11:31:47.635] [INFO   ] thread Player1 terminated.
+[11:31:47.716] [SEVERE ] updating countdown to 55812
+[11:31:47.716] [SEVERE ] updating countdown to 55812
+[11:31:47.725] [INFO   ] thread dealer terminated.
+[11:31:47.726] [SEVERE ] thanks for playing... it was fun!
+[11:31:47.727] [INFO   ] thread bguspl.set.Main.main() terminated.

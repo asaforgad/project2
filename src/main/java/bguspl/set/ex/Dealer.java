@@ -72,7 +72,7 @@ public class Dealer implements Runnable {
         while (!shouldFinish()) {
             placeCardsOnTable();
             timerLoop();
-            updateTimerDisplay(false);
+            updateTimerDisplay(true);
             removeAllCardsFromTable();
         }
         announceWinners();
@@ -216,14 +216,15 @@ public class Dealer implements Runnable {
         ArrayList <Integer> winners = new ArrayList<>(players.length);
         int maxScore = 0;
         for(int i=0; i<players.length; i++){
-            if(players[i].score() <= maxScore){
+            if(players[i].score() >= maxScore){
                 maxScore = players[i].getScore();
-                winners.add(players[i].id);
             }
         }
         System.out.println("Winners are: ");
-        for(int i = 0; i < winners.size(); i++){
-            System.out.println(winners.get(i));
+        for(int i=0; i<players.length; i++){
+            if(players[i].score() == maxScore){
+                System.out.println(i);
+            }
         }
     }
 
@@ -232,13 +233,16 @@ public class Dealer implements Runnable {
         return players[i];
     }
     public boolean checkSets(){
+        System.out.println("checking your set");
 
-        boolean setExist;
+        boolean setExist = false;
+
+        while( !waitingForCheck.isEmpty()){
 
         synchronized(this){
 
             int claimerId = waitingForCheck.poll();
-            ArrayList<Integer> firstSet = players[claimerId].myTokens;
+            ArrayList<Integer> firstSet = new ArrayList<Integer> (players[claimerId].myTokens);
 
             setExist = isSet(firstSet);
             Player claimer = findPlayer(claimerId);
@@ -261,6 +265,7 @@ public class Dealer implements Runnable {
             claimer.checked = true;
             this.notifyAll();
             }
+        }
         return setExist;
     } 
 
@@ -275,6 +280,7 @@ public class Dealer implements Runnable {
             players[Id].myTokens.contains(first)){
                 printSet(players[Id].myTokens);
                 waitingForCheck.remove(Id);
+                players[Id].checked = true;
                 System.out.println("removed");
                 continue;
             }
@@ -286,8 +292,11 @@ public class Dealer implements Runnable {
 
         int [] cardToCheck= new int[3];
         cardToCheck[0] = mySet.remove(0);
+        System.out.println(cardToCheck[0]);
         cardToCheck[1] = mySet.remove(0);
+        System.out.println(cardToCheck[1]);
         cardToCheck[2] = mySet.remove(0);
+        System.out.println(cardToCheck[2]);
 
         return env.util.testSet(cardToCheck);
     }

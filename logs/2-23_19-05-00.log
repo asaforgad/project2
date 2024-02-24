@@ -1,0 +1,48 @@
+[19:05:00.962] [INFO   ] thread bguspl.set.Main.main() starting.
+[19:05:00.967] [SEVERE ] cannot read configuration file config.properties trying from resources.
+[19:05:00.967] [SEVERE ] configuration file was loaded from resources directory.
+[19:05:01.446] [INFO   ] thread dealer starting.
+[19:05:01.447] [INFO   ] thread dealer starting.
+[19:05:01.447] [INFO   ] thread Player0 starting.
+[19:05:01.447] [INFO   ] thread Player1 starting.
+[19:05:01.564] [SEVERE ] placing card 54 in slot 0
+[19:05:01.673] [SEVERE ] placing card 51 in slot 1
+[19:05:01.777] [SEVERE ] placing card 66 in slot 2
+[19:05:01.888] [SEVERE ] placing card 6 in slot 3
+[19:05:01.991] [SEVERE ] placing card 31 in slot 4
+[19:05:02.098] [SEVERE ] placing card 26 in slot 5
+[19:05:02.205] [SEVERE ] placing card 79 in slot 6
+[19:05:02.309] [SEVERE ] placing card 42 in slot 7
+[19:05:02.410] [SEVERE ] placing card 61 in slot 8
+[19:05:02.525] [SEVERE ] placing card 76 in slot 9
+[19:05:02.640] [SEVERE ] placing card 21 in slot 10
+[19:05:02.751] [SEVERE ] placing card 3 in slot 11
+[19:05:03.459] [SEVERE ] updating countdown to 57986
+[19:05:04.164] [SEVERE ] updating countdown to 57281
+[19:05:04.864] [SEVERE ] updating countdown to 56581
+[19:05:05.574] [SEVERE ] updating countdown to 55871
+[19:05:06.280] [SEVERE ] updating countdown to 55165
+[19:05:06.984] [SEVERE ] updating countdown to 54461
+[19:05:07.692] [SEVERE ] updating countdown to 53753
+[19:05:08.395] [SEVERE ] updating countdown to 53050
+[19:05:09.106] [SEVERE ] updating countdown to 52339
+[19:05:09.808] [SEVERE ] updating countdown to 51637
+[19:05:10.519] [SEVERE ] updating countdown to 50926
+[19:05:11.225] [SEVERE ] updating countdown to 50220
+[19:05:11.932] [SEVERE ] updating countdown to 49513
+[19:05:12.636] [SEVERE ] updating countdown to 48809
+[19:05:13.341] [SEVERE ] updating countdown to 48104
+[19:05:14.049] [SEVERE ] updating countdown to 47396
+[19:05:14.756] [SEVERE ] updating countdown to 46689
+[19:05:15.466] [SEVERE ] updating countdown to 45979
+[19:05:16.181] [SEVERE ] updating countdown to 45264
+[19:05:16.887] [SEVERE ] updating countdown to 44558
+[19:05:17.588] [SEVERE ] updating countdown to 43857
+[19:05:18.038] [SEVERE ] exit button pressed
+[19:05:18.038] [INFO   ] thread Player1 terminated.
+[19:05:18.038] [INFO   ] thread Player0 terminated.
+[19:05:18.298] [SEVERE ] updating countdown to 43147
+[19:05:18.298] [SEVERE ] updating countdown to 43147
+[19:05:18.302] [INFO   ] thread dealer terminated.
+[19:05:18.302] [SEVERE ] thanks for playing... it was fun!
+[19:05:18.302] [INFO   ] thread bguspl.set.Main.main() terminated.

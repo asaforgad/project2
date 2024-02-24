@@ -1,0 +1,92 @@
+[18:40:51.768] [INFO   ] thread bguspl.set.Main.main() starting.
+[18:40:51.778] [SEVERE ] cannot read configuration file config.properties trying from resources.
+[18:40:51.778] [SEVERE ] configuration file was loaded from resources directory.
+[18:40:52.297] [INFO   ] thread dealer starting.
+[18:40:52.306] [INFO   ] thread dealer starting.
+[18:40:52.307] [INFO   ] thread Player0 starting.
+[18:40:52.307] [INFO   ] thread Player1 starting.
+[18:40:52.426] [SEVERE ] placing card 10 in slot 0
+[18:40:52.527] [SEVERE ] placing card 43 in slot 1
+[18:40:52.642] [SEVERE ] placing card 75 in slot 2
+[18:40:52.746] [SEVERE ] placing card 8 in slot 3
+[18:40:52.856] [SEVERE ] placing card 77 in slot 4
+[18:40:52.960] [SEVERE ] placing card 63 in slot 5
+[18:40:53.072] [SEVERE ] placing card 45 in slot 6
+[18:40:53.185] [SEVERE ] placing card 32 in slot 7
+[18:40:53.295] [SEVERE ] placing card 65 in slot 8
+[18:40:53.405] [SEVERE ] placing card 61 in slot 9
+[18:40:53.515] [SEVERE ] placing card 17 in slot 10
+[18:40:53.626] [SEVERE ] placing card 41 in slot 11
+[18:40:54.333] [SEVERE ] updating countdown to 57964
+[18:40:55.042] [SEVERE ] updating countdown to 57255
+[18:40:55.749] [SEVERE ] updating countdown to 56548
+[18:40:56.459] [SEVERE ] updating countdown to 55838
+[18:40:56.532] [SEVERE ] key 81 was pressed by player 1
+[18:40:56.532] [SEVERE ] player 1 placing token on slot 0
+[18:40:56.745] [SEVERE ] key 87 was pressed by player 1
+[18:40:56.745] [SEVERE ] player 1 placing token on slot 1
+[18:40:56.974] [SEVERE ] key 69 was pressed by player 1
+[18:40:56.975] [SEVERE ] player 1 placing token on slot 2
+[18:40:57.164] [SEVERE ] updating countdown to 55133
+[18:40:57.867] [SEVERE ] updating countdown to 54430
+[18:40:58.071] [SEVERE ] key 65 was pressed by player 1
+[18:40:58.578] [SEVERE ] updating countdown to 53719
+[18:40:58.735] [SEVERE ] key 83 was pressed by player 1
+[18:40:59.290] [SEVERE ] updating countdown to 53007
+[18:40:59.810] [SEVERE ] key 68 was pressed by player 1
+[18:40:59.997] [SEVERE ] updating countdown to 52300
+[18:41:00.170] [SEVERE ] key 83 was pressed by player 1
+[18:41:00.456] [SEVERE ] key 65 was pressed by player 1
+[18:41:00.711] [SEVERE ] updating countdown to 51586
+[18:41:01.151] [SEVERE ] key 68 was pressed by player 1
+[18:41:01.393] [SEVERE ] key 83 was pressed by player 1
+[18:41:01.425] [SEVERE ] updating countdown to 50872
+[18:41:01.627] [SEVERE ] key 65 was pressed by player 1
+[18:41:01.907] [SEVERE ] key 81 was pressed by player 1
+[18:41:02.113] [SEVERE ] key 87 was pressed by player 1
+[18:41:02.129] [SEVERE ] updating countdown to 50168
+[18:41:02.361] [SEVERE ] key 69 was pressed by player 1
+[18:41:02.844] [SEVERE ] updating countdown to 49453
+[18:41:02.985] [SEVERE ] key 65 was pressed by player 1
+[18:41:03.557] [SEVERE ] updating countdown to 48740
+[18:41:04.265] [SEVERE ] updating countdown to 48032
+[18:41:04.454] [SEVERE ] key 80 was pressed by player 2
+[18:41:04.454] [SEVERE ] player 2 placing token on slot 3
+[18:41:04.975] [SEVERE ] updating countdown to 47322
+[18:41:05.683] [SEVERE ] updating countdown to 46614
+[18:41:06.137] [SEVERE ] key 69 was pressed by player 1
+[18:41:06.390] [SEVERE ] updating countdown to 45907
+[18:41:07.098] [SEVERE ] updating countdown to 45199
+[18:41:07.240] [SEVERE ] key 87 was pressed by player 1
+[18:41:07.476] [SEVERE ] key 81 was pressed by player 1
+[18:41:07.807] [SEVERE ] updating countdown to 44490
+[18:41:08.515] [SEVERE ] updating countdown to 43782
+[18:41:09.226] [SEVERE ] updating countdown to 43071
+[18:41:09.933] [SEVERE ] updating countdown to 42364
+[18:41:10.642] [SEVERE ] updating countdown to 41655
+[18:41:11.350] [SEVERE ] updating countdown to 40947
+[18:41:12.055] [SEVERE ] updating countdown to 40242
+[18:41:12.765] [SEVERE ] updating countdown to 39532
+[18:41:13.159] [SEVERE ] key 81 was pressed by player 1
+[18:41:13.471] [SEVERE ] updating countdown to 38826
+[18:41:14.179] [SEVERE ] updating countdown to 38118
+[18:41:14.887] [SEVERE ] updating countdown to 37410
+[18:41:15.595] [SEVERE ] updating countdown to 36702
+[18:41:16.303] [SEVERE ] updating countdown to 35994
+[18:41:17.009] [SEVERE ] updating countdown to 35288
+[18:41:17.592] [SEVERE ] key 81 was pressed by player 1
+[18:41:17.714] [SEVERE ] updating countdown to 34583
+[18:41:18.422] [SEVERE ] updating countdown to 33875
+[18:41:18.595] [SEVERE ] key 81 was pressed by player 1
+[18:41:19.125] [SEVERE ] updating countdown to 33172
+[18:41:19.839] [SEVERE ] updating countdown to 32458
+[18:41:20.541] [SEVERE ] updating countdown to 31756
+[18:41:21.249] [SEVERE ] updating countdown to 31048
+[18:41:21.956] [SEVERE ] updating countdown to 30341
+[18:41:22.144] [SEVERE ] exit button pressed
+[18:41:22.144] [INFO   ] thread Player1 terminated.
+[18:41:22.664] [SEVERE ] updating countdown to 29633
+[18:41:22.664] [SEVERE ] updating countdown to 29633
+[18:41:22.675] [INFO   ] thread dealer terminated.
+[18:41:22.675] [SEVERE ] thanks for playing... it was fun!
+[18:41:22.675] [INFO   ] thread bguspl.set.Main.main() terminated.
