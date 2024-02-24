@@ -272,14 +272,14 @@ public class Dealer implements Runnable {
                 System.out.println("this is a set");
                 tokensToRemove = firstSet;
                 removeSetsContainSameValue(firstSet);
-                claimer.point(); 
+                claimer.state=1;
                 updateTimerDisplay(true);
                 removeCardsFromTable();
                 placeCardsOnTable();
                 
             }
             else{
-                claimer.penalty();                
+                claimer.state=-1;
             }
             
             claimer.checked = true;

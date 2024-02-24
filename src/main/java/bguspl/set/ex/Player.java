@@ -63,6 +63,8 @@ public class Player implements Runnable {
 
     public volatile boolean checked;
 
+    public volatile int state;
+
 
     
 
@@ -84,6 +86,7 @@ public class Player implements Runnable {
         this.queue =  new ArrayBlockingQueue<Integer>(3);
         terminate = false;
         checked = false;
+        state = 0;
         myTokens = new ArrayList<Integer>(3);
     }
 
@@ -137,15 +140,19 @@ public class Player implements Runnable {
             
         // dealer.notifyAll();
             dealer.checkSets();
-            
         }
 
         synchronized(this){
             while(!checked){
                 playerThread.wait();
             }
+            if (state == 1)
+                point();
+            if (state == -1)
+               penalty();
             checked = false;
-        } 
+
+        }    
     }
   /**
      * Creates an additional thread for an AI (computer) player. The main loop of this thread repeatedly generates
@@ -171,7 +178,7 @@ public class Player implements Runnable {
     /**
      * Called when the game should be terminated.
      */
-    public synchronized void terminate() {
+    public void terminate() {
         terminate = true;
         playerThread.interrupt();
     }
@@ -185,7 +192,7 @@ public class Player implements Runnable {
      */
     public synchronized void keyPressed(int slot) {
             
-            if(queue.size()<=3 && table.tableIsReady){
+            if(queue.size()<=3 && table.tableIsReady && state==0){
                 System.out.println("the number "+ slot+ " slot was pressed");
                     queue.offer(slot);          
     }
@@ -203,15 +210,16 @@ public class Player implements Runnable {
         System.out.println("point");
         
         int ignored = table.countCards(); // this part is just for demonstration in the unit tests  
-        myTokens.clear();
+        myToken`s.clear();
         env.ui.setScore(id, ++score);
 
-        long sleepTime = env.config.penaltyFreezeMillis;
-        while(sleepTime > 0){
+        long sleepTime = env.config.pointFreezeMillis;
+        while(sleepTime > 1000){
             env.ui.setFreeze(id, sleepTime);
         try{playerThread.sleep(1000);} catch(InterruptedException e){}
         sleepTime = sleepTime -1000;}
         env.ui.setFreeze(id, 0);
+        state = 0;
 
         // long timeLeft= env.config.pointFreezeMillis;
         // int loops = (int)timeLeft/1000;
@@ -239,11 +247,12 @@ public class Player implements Runnable {
         System.out.println("penalty");
         // int ignored = table.countCards(); // this part is just for demonstration in the unit tests
         long sleepTime = env.config.penaltyFreezeMillis;
-        while(sleepTime > 0){
+        while(sleepTime > 1000){
             env.ui.setFreeze(id, sleepTime);
         try{playerThread.sleep(1000);} catch(InterruptedException e){}
         sleepTime = sleepTime -1000;}
         env.ui.setFreeze(id, 0);
+        state = 0;
         
 
     //     long timeLeft= env.config.penaltyFreezeMillis;
