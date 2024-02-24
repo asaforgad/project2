@@ -237,7 +237,7 @@ public class Dealer implements Runnable {
 
         boolean setExist = false;
 
-        while( !waitingForCheck.isEmpty()){
+        while(!waitingForCheck.isEmpty()){
 
         synchronized(this){
 
@@ -248,7 +248,6 @@ public class Dealer implements Runnable {
             Player claimer = findPlayer(claimerId);
 
             if(setExist){
-                printSet(firstSet);
                 System.out.println("this is a set");
                 tokensToRemove = firstSet;
                 removeSetsContainSameValue(firstSet);
@@ -291,11 +290,11 @@ public class Dealer implements Runnable {
     public boolean isSet(ArrayList<Integer> mySet){
 
         int [] cardToCheck= new int[3];
-        cardToCheck[0] = mySet.remove(0);
+        cardToCheck[0] = table.slotToCard[mySet.get(0)];
         System.out.println(cardToCheck[0]);
-        cardToCheck[1] = mySet.remove(0);
+        cardToCheck[1] = table.slotToCard[mySet.get(1)];
         System.out.println(cardToCheck[1]);
-        cardToCheck[2] = mySet.remove(0);
+        cardToCheck[2] = table.slotToCard[mySet.get(2)];
         System.out.println(cardToCheck[2]);
 
         return env.util.testSet(cardToCheck);
