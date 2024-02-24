@@ -190,7 +190,7 @@ public class Player implements Runnable {
      * @param slot - the slot corresponding to the key pressed.
      * @throws InterruptedException 
      */
-    public synchronized void keyPressed(int slot) {
+    public void keyPressed(int slot) {
             
             if(queue.size()<=3 && table.tableIsReady && state==0){
                 System.out.println("the number "+ slot+ " slot was pressed");
@@ -205,7 +205,7 @@ public class Player implements Runnable {
      * @post - the player's score is updated in the ui.
      * remember to sleep the thread
      */
-    public synchronized void point() {
+    public void point() {
 
         System.out.println("point");
         
@@ -213,44 +213,36 @@ public class Player implements Runnable {
         myTokens.clear();
         env.ui.setScore(id, ++score);
 
-        long sleepTime = env.config.pointFreezeMillis;
-        while(sleepTime > 1000){
-            env.ui.setFreeze(id, sleepTime);
-        try{playerThread.sleep(1000);} catch(InterruptedException e){}
-        sleepTime = sleepTime -1000;}
-        env.ui.setFreeze(id, 0);
-        state = 0;
+         // int ignored = table.countCards(); // this part is just for demonstration in the unit tests
+         long sleepTime = env.config.pointFreezeMillis + System.currentTimeMillis();
 
-        // long timeLeft= env.config.pointFreezeMillis;
-        // int loops = (int)timeLeft/1000;
-        // int constLoops = loops;
-
-        // while(loops>0){
-        //     env.ui.setFreeze(id, timeLeft);
-        //     if(loops!=0){
-        // try {
-        //     // Sleep for the fixed amount of time
-        //     Thread.sleep(env.config.pointFreezeMillis/constLoops);
-        // } catch (InterruptedException e) {
-        //  }
-    //   }
-    // timeLeft= timeLeft-1000;
-    // loops--;
-    // }
+         while(System.currentTimeMillis() < sleepTime){
+             env.ui.setFreeze(id, sleepTime-System.currentTimeMillis());
+ 
+         if (sleepTime - System.currentTimeMillis() > 900){
+         try{playerThread.sleep(900);} catch(InterruptedException e){}}
+ 
+         }
+         env.ui.setFreeze(id, 0);
+         state = 0;
     }
 
 
     /**
      * Penalize a player and perform other related actions.
      */
-    public synchronized void penalty() {
+    public void penalty() {
         System.out.println("penalty");
         // int ignored = table.countCards(); // this part is just for demonstration in the unit tests
-        long sleepTime = env.config.penaltyFreezeMillis;
-        while(sleepTime > 1000){
-            env.ui.setFreeze(id, sleepTime);
-        try{playerThread.sleep(1000);} catch(InterruptedException e){}
-        sleepTime = sleepTime -1000;}
+        long sleepTime = env.config.penaltyFreezeMillis + System.currentTimeMillis();
+
+        while(System.currentTimeMillis() < sleepTime){
+            env.ui.setFreeze(id, sleepTime-System.currentTimeMillis());
+
+        if (sleepTime - System.currentTimeMillis() > 900){
+        try{playerThread.sleep(900);} catch(InterruptedException e){}}
+
+        }
         env.ui.setFreeze(id, 0);
         state = 0;
         
