@@ -72,6 +72,7 @@ public class Dealer implements Runnable {
         for(Player p : players){
             new Thread(p,"Player"+p.id).start();
         }
+        updateTimerDisplay(true);
         while (!shouldFinish()) {
             placeCardsOnTable();
             timerLoop();
@@ -87,6 +88,7 @@ public class Dealer implements Runnable {
      */
     private void timerLoop() {
         while (!terminate && System.currentTimeMillis() < reshuffleTime) {
+            updateTimerDisplay(false);
             sleepUntilWokenOrTimeout();
             updateTimerDisplay(false);
             removeCardsFromTable();
@@ -160,7 +162,6 @@ public class Dealer implements Runnable {
 
             table.tableIsReady(true);
 
-
         }
     }
 
@@ -173,8 +174,9 @@ public class Dealer implements Runnable {
 
         synchronized (this){
         if (waitingForCheck.isEmpty()){
-        try {
-            this.wait(950);
+        try { 
+            if (System.currentTimeMillis()/1000==lastReset/1000)
+            this.wait(Math.abs(900-lastReset%1000));
         } catch (InterruptedException e) {
             System.out.println("Thread was interrupted.");
         }}}
@@ -185,9 +187,7 @@ public class Dealer implements Runnable {
      */
     private void updateTimerDisplay(boolean reset) {
 
-        // if(env.config.turnTimeoutMillis < 0){
-        //     return;
-        // }
+
 
         if(env.config.turnTimeoutMillis == 0){
             long elapsedTime = System.currentTimeMillis() - lastReset;
@@ -197,7 +197,7 @@ public class Dealer implements Runnable {
             if(!reset){
                 long elapsedTime = System.currentTimeMillis() - lastReset;
                 boolean warn = false;
-                if((env.config.turnTimeoutMillis - elapsedTime) < env.config.turnTimeoutWarningMillis){
+                if(reshuffleTime-System.currentTimeMillis() < env.config.turnTimeoutWarningMillis){
                     warn = true;
                 }
                 env.ui.setCountdown((reshuffleTime-System.currentTimeMillis()), warn);
@@ -273,10 +273,9 @@ public class Dealer implements Runnable {
                 tokensToRemove = firstSet;
                 removeSetsContainSameValue(firstSet);
                 claimer.state=1;
-                updateTimerDisplay(true);
                 removeCardsFromTable();
                 placeCardsOnTable();
-                
+                updateTimerDisplay(true);
             }
             else{
                 claimer.state=-1;
