@@ -166,9 +166,11 @@ public class Player implements Runnable {
         aiThread = new Thread(() -> {
             env.logger.info("thread " + Thread.currentThread().getName() + " starting.");
             while (!terminate) {
+                
                 Random rand = new Random();
                 int random = rand.nextInt(env.config.tableSize);
                 keyPressed(random);
+                System.out.println("did random" + random);
                 try {   
                     synchronized (this) { wait(); }
                 } catch (InterruptedException ignored) {}
@@ -194,8 +196,13 @@ public class Player implements Runnable {
      * @throws InterruptedException 
      */
     public void keyPressed(int slot) {
+
+        System.out.println(state);
+        System.out.println(table.tableIsReady);
+        System.out.println(queue.size());
+
             
-            if(queue.size()<=3 && table.tableIsReady && state==0){
+            if(queue.size()<3 && table.tableIsReady && state==0){
                 System.out.println("the number "+ slot+ " slot was pressed");
                     queue.offer(slot);          
     }
