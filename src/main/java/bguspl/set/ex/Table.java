@@ -132,7 +132,8 @@ public class Table {
         }
 
         //update the grid
-        cardToSlot[slotToCard[slot]]= null;
+        if (slotToCard[slot]!= null)
+            cardToSlot[slotToCard[slot]]= null;
         slotToCard[slot]=null;
         env.ui.removeCard(slot);
         
@@ -145,9 +146,7 @@ public class Table {
      */
     public synchronized void placeToken(int player, int slot) {
         
-            System.out.println("im in place token");
             tokens[player][slot] = true;
-
             env.ui.placeToken(player, slot);
         
     }
@@ -165,7 +164,6 @@ public class Table {
          if (tokens[player][slot] == true){
             tokens[player][slot] = false;
             removed = true;
-            System.out.println(" table removed the token"); 
          env.ui.removeToken(player, slot);
          }
          return removed;
