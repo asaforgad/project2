@@ -42,6 +42,8 @@ public class Dealer implements Runnable {
     private volatile boolean terminate;
     private ArrayList <Integer> tokensToRemove;
     protected volatile ArrayBlockingQueue <Integer> waitingForCheck;
+    long lastReset;
+
 
     /**
      * The time when the dealer needs to reshuffle the deck due to turn timeout.
@@ -56,6 +58,7 @@ public class Dealer implements Runnable {
         this.reshuffleTime= System.currentTimeMillis()+env.config.turnTimeoutMillis;
         this.tokensToRemove = new ArrayList <Integer>(3);
         this.waitingForCheck = new ArrayBlockingQueue <>(players.length);
+        lastReset = System.currentTimeMillis();
 
     }
     
@@ -120,13 +123,16 @@ public class Dealer implements Runnable {
             table.tableIsReady(false);
         
             while(!tokensToRemove.isEmpty()){
-                int slot = tokensToRemove.remove(0);
+                Integer slot = tokensToRemove.remove(0);
+                System.out.println("tokens to remove is ok");
 
                 for (Player p : players){
                         p.getQueue().remove(slot);
+                        System.out.println("queue is ok");
 
-                        if (table.tokens[slot][p.id] == true)
+                        if (table.tokens[p.id][slot] == true)
                             p.myTokens.remove(slot);
+                            System.out.println("my tokens is ok");
                     }
 
                  table.removeCard(slot); 
@@ -151,7 +157,9 @@ public class Dealer implements Runnable {
                     table.placeCard(card, i);       
                 }     
             }
+
             table.tableIsReady(true);
+
 
         }
     }
@@ -166,7 +174,7 @@ public class Dealer implements Runnable {
         synchronized (this){
         if (waitingForCheck.isEmpty()){
         try {
-            this.wait(700);
+            this.wait(950);
         } catch (InterruptedException e) {
             System.out.println("Thread was interrupted.");
         }}}
@@ -176,17 +184,30 @@ public class Dealer implements Runnable {
      * Reset and/or update the countdown and the countdown display.
      */
     private void updateTimerDisplay(boolean reset) {
-        if(!reset){
-            boolean warn = false;
-            if((reshuffleTime-System.currentTimeMillis()) < env.config.turnTimeoutWarningMillis){
-                warn = true;
-            }
-            env.ui.setCountdown((reshuffleTime-System.currentTimeMillis()), warn);
+
+        // if(env.config.turnTimeoutMillis < 0){
+        //     return;
+        // }
+
+        if(env.config.turnTimeoutMillis == 0){
+            long elapsedTime = System.currentTimeMillis() - lastReset;
+            env.ui.setElapsed(elapsedTime);
         }
         else{
-            reshuffleTime = System.currentTimeMillis() + env.config.turnTimeoutMillis;
+            if(!reset){
+                long elapsedTime = System.currentTimeMillis() - lastReset;
+                boolean warn = false;
+                if((env.config.turnTimeoutMillis - elapsedTime) < env.config.turnTimeoutWarningMillis){
+                    warn = true;
+                }
+                env.ui.setCountdown((reshuffleTime-System.currentTimeMillis()), warn);
+            }
+        else{
+            lastReset = System.currentTimeMillis();
+            reshuffleTime = lastReset + env.config.turnTimeoutMillis;
             env.ui.setCountdown(env.config.turnTimeoutMillis, false);
         }
+    }
     }
 
     /**

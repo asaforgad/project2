@@ -1,0 +1,46 @@
+[13:39:41.316] [INFO   ] thread bguspl.set.Main.main() starting.
+[13:39:41.326] [SEVERE ] cannot read configuration file config.properties trying from resources.
+[13:39:41.326] [SEVERE ] configuration file was loaded from resources directory.
+[13:39:41.755] [INFO   ] thread dealer starting.
+[13:39:41.755] [INFO   ] thread dealer starting.
+[13:39:41.755] [INFO   ] thread Player0 starting.
+[13:39:41.763] [INFO   ] thread Player1 starting.
+[13:39:41.867] [SEVERE ] placing card 21 in slot 0
+[13:39:41.976] [SEVERE ] placing card 12 in slot 1
+[13:39:42.078] [SEVERE ] placing card 50 in slot 2
+[13:39:42.181] [SEVERE ] placing card 34 in slot 3
+[13:39:42.293] [SEVERE ] placing card 53 in slot 4
+[13:39:42.395] [SEVERE ] placing card 8 in slot 5
+[13:39:42.496] [SEVERE ] placing card 11 in slot 6
+[13:39:42.597] [SEVERE ] placing card 26 in slot 7
+[13:39:42.710] [SEVERE ] placing card 64 in slot 8
+[13:39:42.825] [SEVERE ] placing card 29 in slot 9
+[13:39:42.926] [SEVERE ] placing card 2 in slot 10
+[13:39:43.042] [SEVERE ] placing card 3 in slot 11
+[13:39:43.996] [SEVERE ] updating countdown to 57759
+[13:39:44.955] [SEVERE ] updating countdown to 56800
+[13:39:45.912] [SEVERE ] updating countdown to 55843
+[13:39:46.871] [SEVERE ] updating countdown to 54884
+[13:39:47.830] [SEVERE ] updating countdown to 53925
+[13:39:48.789] [SEVERE ] updating countdown to 52966
+[13:39:49.420] [SEVERE ] exit button pressed
+[13:39:49.420] [INFO   ] thread Player0 terminated.
+[13:39:49.420] [INFO   ] thread Player1 terminated.
+[13:39:49.741] [SEVERE ] updating countdown to 52014
+[13:39:49.741] [SEVERE ] updating countdown to 60000
+[13:39:49.844] [SEVERE ] removing card from slot 0
+[13:39:49.955] [SEVERE ] removing card from slot 1
+[13:39:50.065] [SEVERE ] removing card from slot 2
+[13:39:50.175] [SEVERE ] removing card from slot 3
+[13:39:50.285] [SEVERE ] removing card from slot 4
+[13:39:50.394] [SEVERE ] removing card from slot 5
+[13:39:50.504] [SEVERE ] removing card from slot 6
+[13:39:50.614] [SEVERE ] removing card from slot 7
+[13:39:50.724] [SEVERE ] removing card from slot 8
+[13:39:50.834] [SEVERE ] removing card from slot 9
+[13:39:50.944] [SEVERE ] removing card from slot 10
+[13:39:51.054] [SEVERE ] removing card from slot 11
+[13:39:51.054] [INFO   ] thread dealer terminated.
+[13:39:51.054] [INFO   ] thread dealer terminated.
+[13:39:51.054] [SEVERE ] thanks for playing... it was fun!
+[13:39:51.054] [INFO   ] thread bguspl.set.Main.main() terminated.
