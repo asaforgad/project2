@@ -3,6 +3,7 @@ package bguspl.set.ex;
 import bguspl.set.Env;
 
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
@@ -97,6 +98,7 @@ public class Player implements Runnable {
     public void run() {
     playerThread = Thread.currentThread();
         env.logger.info("thread " + Thread.currentThread().getName() + " starting.");
+        System.out.println(human);
         if (!human) createArtificialIntelligence();
 
         try { while (!terminate) {
@@ -160,13 +162,14 @@ public class Player implements Runnable {
      */
     private void createArtificialIntelligence() {
         // note: this is a very, very smart AI (!)
+        System.out.println("im in create artificial");
         aiThread = new Thread(() -> {
             env.logger.info("thread " + Thread.currentThread().getName() + " starting.");
             while (!terminate) {
-                int random = (int) (Math.random() * env.config.tableSize);
-
-                try {
-                    keyPressed(random);
+                Random rand = new Random();
+                int random = rand.nextInt(env.config.tableSize);
+                keyPressed(random);
+                try {   
                     synchronized (this) { wait(); }
                 } catch (InterruptedException ignored) {}
             }
