@@ -105,7 +105,7 @@ public class Player implements Runnable {
                 if(table.tokens[this.id][currentToken]==true){
                     table.removeToken(id,currentToken); 
                     myTokens.remove(currentToken);
-                    // System.out.println("removed");
+                    System.out.println("removed");
                 }
                 else{
                     table.placeToken(id, currentToken); 
@@ -130,10 +130,14 @@ public class Player implements Runnable {
     private void checkDealer() throws InterruptedException{ 
 
         synchronized(dealer){
+            
             dealer.waitingForCheck.add(this.id);
-            dealer.notifyAll();
+            
+        dealer.notifyAll();
             dealer.checkSets();
+            
         }
+
 
         synchronized(this){
             while(!checked){
@@ -212,7 +216,8 @@ public class Player implements Runnable {
         } catch (InterruptedException e) {
          }
       }
-        loops--;
+    timeLeft= timeLeft-1000;
+    loops--;
     }
     }
 
@@ -230,14 +235,16 @@ public class Player implements Runnable {
         while(loops>0){
             env.ui.setFreeze(id, timeLeft);
             if(loops!=0){
-        try {
-            // Sleep for the fixed amount of time
-            Thread.sleep(env.config.penaltyFreezeMillis/constLoops);
-        } catch (InterruptedException e) {
-        }
+            try {
+                // Sleep for the fixed amount of time
+                Thread.sleep(env.config.penaltyFreezeMillis/constLoops);
+            } catch (InterruptedException e) {
+            }
     }
-loops--;
+    timeLeft= timeLeft-1000;
+    loops--;
     }
+
     }
     
 

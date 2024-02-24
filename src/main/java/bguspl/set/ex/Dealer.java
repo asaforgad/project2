@@ -152,6 +152,7 @@ public class Dealer implements Runnable {
                 }     
             }
             table.tableIsReady(true);
+
         }
     }
 
@@ -160,13 +161,15 @@ public class Dealer implements Runnable {
      */
 
      
-    private synchronized void sleepUntilWokenOrTimeout() {
+    private void sleepUntilWokenOrTimeout() {
+
+        synchronized (this){
         if (waitingForCheck.isEmpty()){
         try {
-            Thread.sleep(700);
+            this.wait(700);
         } catch (InterruptedException e) {
             System.out.println("Thread was interrupted.");
-        }}
+        }}}
     }
 
     /**
@@ -237,15 +240,16 @@ public class Dealer implements Runnable {
             int claimerId = waitingForCheck.poll();
             ArrayList<Integer> firstSet = players[claimerId].myTokens;
 
-            setExist = isSet(claimerId, firstSet);
+            setExist = isSet(firstSet);
             Player claimer = findPlayer(claimerId);
 
             if(setExist){
                 printSet(firstSet);
                 System.out.println("this is a set");
                 tokensToRemove = firstSet;
-                claimer.point(); 
                 removeSetsContainSameValue(firstSet);
+                claimer.point(); 
+                updateTimerDisplay(true);
                 removeCardsFromTable();
                 placeCardsOnTable();
                 
@@ -278,42 +282,16 @@ public class Dealer implements Runnable {
     }
 
 
-    public boolean isSet(int claimerId, ArrayList<Integer> mySet){
-        int first = mySet.remove(0);
-        int second = mySet.remove(0);
-        int third = mySet.remove(0);
+    public boolean isSet(ArrayList<Integer> mySet){
 
+        int [] cardToCheck= new int[3];
+        cardToCheck[0] = mySet.remove(0);
+        cardToCheck[1] = mySet.remove(0);
+        cardToCheck[2] = mySet.remove(0);
 
-        int thirdF[] = extractFeatures(table.slotToCard[third]);
-        int secondF[] = extractFeatures(table.slotToCard[second]);
-        int firstF[] = extractFeatures(table.slotToCard[first]);
-
-
-        boolean compareFeatures = compareFeatures(firstF, secondF, thirdF);
-        return compareFeatures;
+        return env.util.testSet(cardToCheck);
     }
 
-    private static int[] extractFeatures(Integer card) {
-        int[] features = new int[4];
-        for (int i = 0; i < 4; i++) {
-            features[i] = (card / (int) Math.pow(3, i)) % 3;
-        }
-        return features;
-    }
-
-    public static boolean compareFeatures(int[] card1, int[] card2, int[] card3) {
-        for (int i = 0; i < 4; i++) {
-            int feature1 = card1[i];
-            int feature2 = card2[i];
-            int feature3 = card3[i];
-
-            // Check if values are either all the same or all different
-            if (!((feature1 == feature2 && feature2 == feature3) || (feature1 != feature2 && feature2 != feature3 && feature1 != feature3))) {
-                return false; // Not a set
-            }
-        }
-        return true; // Form a set
-    }
 
 
     public void printSet(ArrayList<Integer> mySet){
