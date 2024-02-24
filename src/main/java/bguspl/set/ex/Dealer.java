@@ -161,7 +161,6 @@ public class Dealer implements Runnable {
             }
 
             table.tableIsReady(true);
-
         }
     }
 
