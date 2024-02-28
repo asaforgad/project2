@@ -60,6 +60,7 @@ public class Player implements Runnable {
     private int score;
 
     protected ArrayBlockingQueue<Integer> awaitDealer;
+
     private ArrayBlockingQueue<Integer> queue;
 
     public ArrayList<Integer> myTokens;
@@ -106,10 +107,8 @@ public class Player implements Runnable {
         while (!terminate) {
             Integer currentToken;
             try {
-                System.out.println("Taking a token " + state + " " + queue.size());
                 state = 0;
                 currentToken = queue.take();
-                System.out.println("Player" + id + "Token: " + currentToken);
                 if (table.tokens[this.id][currentToken] == true) {
                     table.removeToken(id, currentToken);
                     myTokens.remove(currentToken);

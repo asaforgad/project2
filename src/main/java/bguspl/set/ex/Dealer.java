@@ -88,8 +88,6 @@ public class Dealer implements Runnable {
             updateTimerDisplay(false);
             sleepUntilWokenOrTimeout();
             updateTimerDisplay(false);
-            // removeCardsFromTable();
-            // placeCardsOnTable();
             checkSets();
         }
     }
@@ -98,8 +96,6 @@ public class Dealer implements Runnable {
      * Called when the game should be terminated.
      */
     public void terminate() {
-        System.out.println("TERMINATE");
-        //players[0].terminate();
         for (int i = players.length-1; i >= 0; i--) {
             players[i].terminate();
         }
@@ -154,9 +150,7 @@ public class Dealer implements Runnable {
                     deck.remove(0);
                     table.placeCard(card, i);
                 }
-                if (env.config.hints) {
-                    table.hints();
-                }
+
             }
 
             table.tableIsReady(true);
@@ -345,14 +339,6 @@ public class Dealer implements Runnable {
         return false;
     }
 
-    public void printSet(ArrayList<Integer> mySet) {
 
-        System.out.println("your set:");
-        System.out.println(mySet.remove(0));
-        System.out.println(mySet.remove(0));
-        System.out.println(mySet.remove(0));
-        System.out.println("that was your set!");
-
-    }
 
 }
