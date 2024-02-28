@@ -319,7 +319,7 @@ public class Dealer implements Runnable {
 
     public boolean isSet(ArrayList<Integer> mySet) {
         synchronized (table) {
-            int[] cardToCheck = new int[3];
+            int[] cardToCheck = new int[env.config.featureSize];
             boolean allGood = true;
 
             if (table.slotToCard[mySet.get(0)] == null ||

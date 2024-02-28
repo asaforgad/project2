@@ -85,7 +85,7 @@ public class Player implements Runnable {
         this.id = id;
         this.human = human;
         this.dealer = dealer;
-        this.queue = new ArrayBlockingQueue<Integer>(3);
+        this.queue = new ArrayBlockingQueue<Integer>(env.config.featureSize);
         this.awaitDealer = new ArrayBlockingQueue<Integer>(1);
         terminate = false;
         checked = false;
